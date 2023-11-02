@@ -1,10 +1,8 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
-from rest_framework import generics, status
+from rest_framework import generics
 from .serializers import *
 from .models import *
-from rest_framework.views import APIView
-from rest_framework.response import Response
 
 def is_admin(user):
     return user.is_authenticated and user.is_staff
