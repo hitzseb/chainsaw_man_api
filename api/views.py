@@ -11,7 +11,7 @@ def is_admin(user):
 
 class SagaListView(generics.ListAPIView):
     queryset = Saga.objects.all()
-    serializer_class = SagaSerializer   
+    serializer_class = SagaSerializer
 
 @method_decorator(user_passes_test(is_admin), name='dispatch')
 class SagaCreateView(generics.CreateAPIView):
