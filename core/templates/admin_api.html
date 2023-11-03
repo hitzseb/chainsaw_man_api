@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="my-4">
+    <h2 class="fs-3 my-4">Admin endpoints:</h2>
+    {% for endpoint in endpoints %}
+    <p class="my-4">
+        <span class="fw-bold me-1">{{ endpoint.url }}</span>
+        <span class="text-muted">{{ endpoint.description }}</span>
+    </p>
+    {% endfor %}
+</div>
+
+{% endblock %}

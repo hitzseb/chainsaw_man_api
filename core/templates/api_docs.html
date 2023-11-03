@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="my-4">
+    <h2 class="fs-3 my-4">Available endpoints:</h2>
+    {% for endpoint in endpoints %}
+    <p class="my-4">
+        <span class="fw-bold me-1">{{ endpoint.url }}</span>
+        <span class="text-muted">{{ endpoint.description }}</span>
+    </p>
+    {% endfor %}
+    <a class="link-secondary link-underline link-underline-opacity-0 link-underline-opacity-75-hover my-4" href="{% url 'admin_api' %}">Admin API</a>
+</div>
+
+{% endblock %}

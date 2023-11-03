@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'drf_yasg',
     'core',
     'api',
 ]
@@ -140,17 +139,5 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = [
     'GET',
 ]
-
-SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'basic': {
-            'type': 'basic'
-        }
-    },
-}
-
-REDOC_SETTINGS = {
-   'LAZY_RENDERING': False,
-}
 
 

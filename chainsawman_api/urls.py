@@ -15,29 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import include, path
-from rest_framework import permissions
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
 
-schema_view = get_schema_view(
-    openapi.Info(
-        title="Chainsawman API",
-        default_version='v1',
-        description="Descripción de tu API",
-        terms_of_service="https://www.tu-terminos-de-servicio.com/",
-        contact=openapi.Contact(email="contact@tu-api.com"),
-        license=openapi.License(name="Tu Licencia"),
-    ),
-    public=True,
-    permission_classes=(permissions.AllowAny,),
-)
+def redirect_to_home(request):
+    return redirect('home')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('api/', include('api.urls')),
-    path('swagger<str:format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('', redirect_to_home),
 ]
