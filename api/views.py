@@ -19,13 +19,7 @@ class SagaCreateView(generics.CreateAPIView):
     serializer_class = SagaSerializer
 
 @method_decorator(user_passes_test(is_admin), name='dispatch')
-class SagaUpdateView(generics.UpdateAPIView):
-    queryset = Saga.objects.all()
-    serializer_class = SagaSerializer
-    lookup_field = 'number'
-
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class SagaDestroyView(generics.DestroyAPIView):
+class SagaRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Saga.objects.all()
     serializer_class = SagaSerializer
     lookup_field = 'number'
@@ -42,13 +36,7 @@ class ArcCreateView(generics.CreateAPIView):
     serializer_class = ArcSerializer
 
 @method_decorator(user_passes_test(is_admin), name='dispatch')
-class ArcUpdateView(generics.UpdateAPIView):
-    queryset = Arc.objects.all()
-    serializer_class = ArcSerializer
-    lookup_field = 'number'
-    
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class ArcDestroyView(generics.DestroyAPIView):
+class ArcRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Arc.objects.all()
     serializer_class = ArcSerializer
     lookup_field = 'number'
@@ -65,13 +53,7 @@ class VolumeCreateView(generics.CreateAPIView):
     serializer_class = VolumeSerializer
 
 @method_decorator(user_passes_test(is_admin), name='dispatch')
-class VolumeUpdateView(generics.UpdateAPIView):
-    queryset = Volume.objects.all()
-    serializer_class = VolumeSerializer
-    lookup_field = 'number'
-    
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class VolumeDestroyView(generics.DestroyAPIView):
+class VolumeRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Volume.objects.all()
     serializer_class = VolumeSerializer
     lookup_field = 'number'
@@ -93,13 +75,7 @@ class MangaCreateView(generics.CreateAPIView):
     serializer_class = MangaDetailSerializer
 
 @method_decorator(user_passes_test(is_admin), name='dispatch')
-class MangaUpdateView(generics.UpdateAPIView):
-    queryset = Manga.objects.all()
-    serializer_class = MangaDetailSerializer
-    lookup_field = 'number'
-    
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class MangaDestroyView(generics.DestroyAPIView):
+class MangaRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Manga.objects.all()
     serializer_class = MangaDetailSerializer
     lookup_field = 'number'
@@ -121,13 +97,7 @@ class CharacterCreateView(generics.CreateAPIView):
     serializer_class = CharacterDetailSerializer
 
 @method_decorator(user_passes_test(is_admin), name='dispatch')
-class CharacterUpdateView(generics.UpdateAPIView):
-    queryset = Character.objects.all()
-    serializer_class = CharacterDetailSerializer
-    lookup_field = 'name'
-    
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class CharacterDestroyView(generics.DestroyAPIView):
+class CharacterRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Character.objects.all()
     serializer_class = CharacterDetailSerializer
     lookup_field = 'name'
