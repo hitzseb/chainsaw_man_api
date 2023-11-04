@@ -6,6 +6,17 @@ class SagaSerializer(serializers.ModelSerializer):
         model = Saga
         fields = ['number', 'title', 'plot']
         
+class SagaSerializerMin(serializers.ModelSerializer):
+    class Meta:
+        model = Saga
+        fields = ['number', 'title']
+        
+class ArcListSerializer(serializers.ModelSerializer):
+    saga = SagaSerializerMin(many=False, read_only=True)
+    class Meta:
+        model = Arc
+        fields = ['number', 'title', 'plot', 'saga']
+        
 class ArcSerializer(serializers.ModelSerializer):
     class Meta:
         model = Arc

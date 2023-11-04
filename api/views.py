@@ -26,7 +26,7 @@ class SagaRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 
 class ArcListView(ListAPIView):
     queryset = Arc.objects.all()
-    serializer_class = ArcSerializer
+    serializer_class = ArcListSerializer
     
 @method_decorator(user_passes_test(is_admin), name='dispatch')
 class ArcCreateView(CreateAPIView):
