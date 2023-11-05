@@ -51,10 +51,9 @@ class VolumeSerializerMin(serializers.ModelSerializer):
 class MangaDetailSerializer(serializers.ModelSerializer):
     volume = VolumeSerializerMin(many=False, read_only=True)
     arc = ArcSerializerMin(many=False, read_only=True)
-    characters = CharacterListSerializer(many=True, read_only=True)
     class Meta:
         model = Manga
-        fields = ['number', 'title', 'date', 'cover', 'plot', 'volume', 'arc', 'characters']
+        fields = ['number', 'title', 'date', 'cover', 'plot', 'volume', 'arc']
         
 class MangaSerializer(serializers.ModelSerializer):
     class Meta:

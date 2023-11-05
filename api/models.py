@@ -43,7 +43,7 @@ class Character(models.Model):
     description = models.TextField(null=True, blank=True)
     species = models.TextField(null=True, blank=True)
     status = models.CharField(max_length=50, null=True, blank=True)
-    manga_debut = models.ForeignKey(Manga, on_delete=models.SET_NULL, null=True, blank=True, related_name='characters')
+    manga_debut = models.ForeignKey(Manga, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.name
