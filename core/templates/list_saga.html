@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-4">
+  <div class="col col-sm-10 col-md-8 col-lg-6 col-xl-4 col-auto mx-auto">
+
+    <h2>Saga List</h2>
+    <ul class="list-group">
+      {% for saga in saga_list %}
+      <a class="text-decoration-none" href="{% url 'saga_update' number=saga.number %}">
+        <li class="list-group-item list-group-item-action">
+          {{ saga.number }}-{{ saga.title }}
+        </li>
+      </a>
+      {% endfor %}
+    </ul>
+    <a class="btn" href="{% url 'saga_create' %}">Add Saga</a>
+    
+  </div>
+</div>
+
+{% endblock %}

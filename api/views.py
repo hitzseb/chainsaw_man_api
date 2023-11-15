@@ -1,101 +1,63 @@
-from django.contrib.auth.decorators import user_passes_test
-from django.utils.decorators import method_decorator
-from rest_framework.generics import ListAPIView, CreateAPIView,RetrieveAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .serializers import *
-from .models import *
-from utils import is_admin
 
-# Saga views
-
+# Get all sagas
 class SagaListView(ListAPIView):
     queryset = Saga.objects.all()
     serializer_class = SagaSerializer
 
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class SagaCreateView(CreateAPIView):
-    queryset = Saga.objects.all()
-    serializer_class = SagaSerializer
-
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class SagaRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = Saga.objects.all()
-    serializer_class = SagaSerializer
-    lookup_field = 'number'
-    
-# Arc views
-
+# Get all arcs
 class ArcListView(ListAPIView):
     queryset = Arc.objects.all()
-    serializer_class = ArcListSerializer
+    serializer_class = ArcSerializerSm
     
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class ArcCreateView(CreateAPIView):
-    queryset = Arc.objects.all()
-    serializer_class = ArcSerializer
-
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class ArcRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = Arc.objects.all()
-    serializer_class = ArcSerializer
-    lookup_field = 'number'
-    
-# Volume views
-
+# Get all volumes
 class VolumeListView(ListAPIView):
     queryset = Volume.objects.all()
     serializer_class = VolumeSerializer
     
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class VolumeCreateView(CreateAPIView):
-    queryset = Volume.objects.all()
-    serializer_class = VolumeSerializer
-
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class VolumeRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = Volume.objects.all()
-    serializer_class = VolumeSerializer
-    lookup_field = 'number'
-    
-# Manga views
-
-class MangaListView(ListAPIView):
-    queryset = Manga.objects.all()
-    serializer_class = MangaListSerializer
-    
+# Get manga by number
 class MangaRetrieveView(RetrieveAPIView):
-    queryset = Manga.objects.all()
-    serializer_class = MangaDetailSerializer
-    lookup_field = 'number'
-    
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class MangaCreateView(CreateAPIView):
-    queryset = Manga.objects.all()
-    serializer_class = MangaSerializer
-
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class MangaRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = Manga.objects.all()
     serializer_class = MangaSerializer
     lookup_field = 'number'
     
-# Character views
-
+    def get_queryset(self):
+        number = self.kwargs['number']
+        return Anime.objects.filter(number=number)
+    
+# Get all seasons
+class SeasonListView(ListAPIView):
+    queryset = Season.objects.all()
+    serializer_class = SeasonSerializer
+    
+# Get anime by number
+class AnimeRetrieveView(RetrieveAPIView):
+    serializer_class = AnimeSerializer
+    lookup_field = 'number'
+    
+    def get_queryset(self):
+        number = self.kwargs['number']
+        return Anime.objects.filter(number=number)
+    
+# Get all characters
 class CharacterListView(ListAPIView):
     queryset = Character.objects.all()
-    serializer_class = CharacterListSerializer
+    serializer_class = CharacterSerializerSm
     
+# Get character by name
 class CharacterRetrieveView(RetrieveAPIView):
-    queryset = Character.objects.all()
-    serializer_class = CharacterDetailSerializer
+    serializer_class = CharacterSerializer
     lookup_field = 'name'
     
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class CharacterCreateView(CreateAPIView):
-    queryset = Character.objects.all()
-    serializer_class = CharacterSerializer
-
-@method_decorator(user_passes_test(is_admin), name='dispatch')
-class CharacterRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = Character.objects.all()
-    serializer_class = CharacterSerializer
+    def get_queryset(self):
+        name = self.kwargs['name']
+        return Anime.objects.filter(name=name)
+    
+# Get species by name
+class SpeciesRetrieveView(RetrieveAPIView):
+    serializer_class = SpeciesSerializer
     lookup_field = 'name'
+    
+    def get_queryset(self):
+        name = self.kwargs['name']
+        return Anime.objects.filter(name=name)

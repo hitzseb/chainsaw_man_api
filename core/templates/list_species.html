@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-4">
+  <div class="col col-sm-10 col-md-8 col-lg-6 col-xl-4 col-auto mx-auto">
+
+    <h2>Species List</h2>
+    <ul class="list-group">
+      {% for species in species_list %}
+      <a class="text-decoration-none" href="{% url 'species_update' name=species.name %}">
+        <li class="list-group-item list-group-item-action">
+          {{ species.name }}
+        </li>
+      </a>
+      {% endfor %}
+    </ul>
+    <a class="btn" href="{% url 'species_create' %}">Add Species</a>
+    
+  </div>
+</div>
+
+{% endblock %}

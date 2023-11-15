@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-4">
+  <div class="col col-sm-10 col-md-8 col-lg-6 col-xl-4 col-auto mx-auto">
+
+    <h2>Anime</h2>
+    <ul class="list-group">
+      {% for anime in anime_list %}
+      <a class="text-decoration-none" href="{% url 'anime_update' number=anime.number %}">
+        <li class="list-group-item list-group-item-action">
+          {{ anime.number }}-{{ anime.title }}
+        </li>
+      </a>
+      {% endfor %}
+    </ul>
+    <a class="btn" href="{% url 'anime_create' %}">Add Anime</a>
+    
+  </div>
+</div>
+
+{% endblock %}

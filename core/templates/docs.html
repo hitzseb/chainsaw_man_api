@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container my-4">
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6 mx-auto">
+            <h2>Endpoints</h2>
+            {% for endpoint in endpoints %}
+            <p class="my-4">
+                <span class="fw-bold me-1">{{ endpoint.url }}</span>
+                {{ endpoint.description }}
+            </p>
+            {% endfor %}
+            <a href="{% url 'schema-swagger-ui' %}" target="_blank">Swagger documentation</a>
+            <h2 class="mt-5">Usage</h2>
+            <p class="my-4">
+                <span class="fw-bold me-1">Authentication:</span>
+                JWT tokens are required for enhanced access. Anonymous users can make a limited number of requests
+                without a token.
+            </p>
+            <p class="my-4">
+                <span class="fw-bold me-1">Throttling:</span>
+                Requests without a token are subject to limited access. Authenticated users with a valid token enjoy
+                higher throttling limits.
+            </p>
+            <p class="my-4">
+                <span class="fw-bold me-1">Token Usage:</span>
+                Include the obtained access token in the Authorization header of your requests. To refresh the access
+                token, use the refresh token at
+                <span class="fw-bold ms-1">/api/token/refresh/</span>
+            </p>
+            <p class="my-4">
+                <span class="fw-bold me-1">Note:</span>
+                Keep tokens secure and avoid sharing them publicly.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

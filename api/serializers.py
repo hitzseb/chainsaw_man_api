@@ -1,77 +1,99 @@
 from rest_framework import serializers
-from .models import *
+from core.models import *
 
-class SagaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Saga
-        fields = ['number', 'title', 'plot']
-        
-class SagaSerializerMin(serializers.ModelSerializer):
+# Small serializers
+
+class SagaSerializerSm(serializers.ModelSerializer):
     class Meta:
         model = Saga
         fields = ['number', 'title']
         
-class ArcListSerializer(serializers.ModelSerializer):
-    saga = SagaSerializerMin(many=False, read_only=True)
+class ArcSerializerSm(serializers.ModelSerializer):
     class Meta:
         model = Arc
-        fields = ['number', 'title', 'plot', 'saga']
+        fields = ['number', 'title']   
         
-class ArcSerializer(serializers.ModelSerializer):
+class VolumeSerializerSm(serializers.ModelSerializer):
     class Meta:
-        model = Arc
-        fields = ['number', 'title', 'plot', 'saga']
-        
-class ArcSerializerMin(serializers.ModelSerializer):
-    class Meta:
-        model = Arc
-        fields = ['number', 'title']
-        
-class MangaListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Manga
+        model = Volume
         fields = ['number', 'title', 'cover']
         
-class CharacterListSerializer(serializers.ModelSerializer):
+class MangaSerializerSm(serializers.ModelSerializer):
+    class Meta:
+        model = Manga
+        fields = ['number', 'title', 'cover'] 
+
+class SeasonSerializerSm(serializers.ModelSerializer):
+    class Meta:
+        model = Season
+        fields = ['number']
+      
+class AnimeSerializerSm(serializers.ModelSerializer):
+    class Meta:
+        model = Anime
+        fields = ['number', 'title', 'date']
+        
+class SpeciesSerializerSm(serializers.ModelSerializer):
+    class Meta:
+        model = Species
+        fields = ['name']
+        
+class CharacterSerializerSm(serializers.ModelSerializer):
     class Meta:
         model = Character
         fields = ['name', 'picture']
+
+# Full serializers
+
+class SagaSerializer(serializers.ModelSerializer):
+    arcs = ArcSerializerSm(many=True, read_only=True)
+    class Meta:
+        model = Saga
+        fields = ['number', 'title', 'plot', 'arcs']
+        
+class ArcSerializer(serializers.ModelSerializer):
+    saga = SagaSerializerSm(many=False, read_only=True)
+    class Meta:
+        model = Arc
+        fields = ['number', 'title', 'plot', 'saga']
         
 class VolumeSerializer(serializers.ModelSerializer):
-    manga = MangaListSerializer(many=True, read_only=True)
+    manga = MangaSerializerSm(many=True, read_only=True)
     class Meta:
         model = Volume
         fields = ['number', 'title', 'date', 'plot', 'cover', 'manga']
         
-class VolumeSerializerMin(serializers.ModelSerializer):
-    class Meta:
-        model = Volume
-        fields = ['number', 'title', 'cover']
-        
-class MangaDetailSerializer(serializers.ModelSerializer):
-    volume = VolumeSerializerMin(many=False, read_only=True)
-    arc = ArcSerializerMin(many=False, read_only=True)
-    class Meta:
-        model = Manga
-        fields = ['number', 'title', 'date', 'cover', 'plot', 'volume', 'arc']
-        
 class MangaSerializer(serializers.ModelSerializer):
+    volume = VolumeSerializerSm(many=False, read_only=True)
+    arc = ArcSerializerSm(many=False, read_only=True)
+    characters = CharacterSerializerSm(many=True, read_only=True)
     class Meta:
         model = Manga
-        fields = ['number', 'title', 'date', 'cover', 'plot', 'volume', 'arc']
+        fields = ['number', 'title', 'date', 'cover', 'plot', 'volume', 'arc', 'characters']
         
-class MangaSerializerMin(serializers.ModelSerializer):
+class SeasonSerializer(serializers.ModelSerializer):
+    episodes = AnimeSerializerSm(many=True, read_only=True)
     class Meta:
-        model = Manga
-        fields = ['number', 'title', 'cover']
+        model = Season
+        fields = ['number', 'plot', 'start_date', 'end_date', 'episodes']
         
-class CharacterDetailSerializer(serializers.ModelSerializer):
-    manga_debut = MangaSerializerMin(many=False, read_only=True)
+class AnimeSerializer(serializers.ModelSerializer):
+    season = SeasonSerializerSm(many=False, read_only=True)
+    characters = CharacterSerializerSm(many=True, read_only=True)
     class Meta:
-        model = Character
-        fields = ['name', 'picture', 'description', 'species', 'status', 'manga_debut']
+        model = Anime
+        fields = ['number', 'title', 'date', 'plot', 'season', 'characters']
+        
+class SpeciesSerializer(serializers.ModelSerializer):
+    characters = CharacterSerializerSm(many=True, read_only=True)
+    class Meta:
+        model = Species
+        fields = ['name', 'description', 'characters']
         
 class CharacterSerializer(serializers.ModelSerializer):
+    species = SagaSerializerSm(many=False, read_only=True)
+    manga_debut = MangaSerializerSm(many=False, read_only=True)
+    anime_debut = AnimeSerializerSm(many=False, read_only=True)
     class Meta:
         model = Character
-        fields = ['name', 'picture', 'description', 'species', 'status', 'manga_debut']
+        fields = ['name', 'picture', 'description', 'status', 'species', 'manga_debut', 'anime_debut']

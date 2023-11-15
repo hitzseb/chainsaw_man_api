@@ -1,12 +1,19 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
 
 {% block content %}
 
-<img src="https://static.wikia.nocookie.net/chainsaw-man/images/e/ea/Principal.png/revision/latest/scale-to-width-down/600?cb=20190512232237&path-prefix=es"
-    class="img-fluid" alt="Chainsaw Man">
+<div class="container my-5">
+    <div class="row">
 
-<h3 class="display-4 my-4">Chainsaw Man API</h3>
-<p class="text-justify my-4">Chainsaw Man API provides access to detailed information about the manga 'Chainsaw Man'. This API allows making GET requests from any server without the need for credentials, facilitating access to data related to the manga, characters, and more.</p>
-
-
+        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6 mx-auto">
+            <img class="img-fluid" src="{% static 'img/chainsaw_man.jpg' %}">
+            <p class="my-4">{{ api_description }}</p>
+        </div>
+    
+    </div>
+</div>
 {% endblock %}

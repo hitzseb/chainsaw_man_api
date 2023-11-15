@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-4">
+  <div class="col col-sm-10 col-md-8 col-lg-6 col-xl-4 col-auto mx-auto">
+
+    <h2>Manga List</h2>
+    <ul class="list-group">
+      {% for manga in manga_list %}
+      <a class="text-decoration-none" href="{% url 'manga_update' number=manga.number %}">
+        <li class="list-group-item list-group-item-action">
+          {{ manga.number }}-{{ manga.title }}
+        </li>
+      </a>
+      {% endfor %}
+    </ul>
+    <a class="btn" href="{% url 'manga_create' %}">Add Manga</a>
+    
+  </div>
+</div>
+
+{% endblock %}

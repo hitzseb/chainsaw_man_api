@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-4">
+  <div class="col col-sm-10 col-md-8 col-lg-6 col-xl-4 col-auto mx-auto">
+
+    <h2>Season List</h2>
+    <ul class="list-group">
+      {% for season in season_list %}
+      <a class="text-decoration-none" href="{% url 'season_update' number=season.number %}">
+        <li class="list-group-item list-group-item-action">
+          {{ season.number }}-{{ season.title }}
+        </li>
+      </a>
+      {% endfor %}
+    </ul>
+    <a class="btn" href="{% url 'season_create' %}">Add Season</a>
+    
+  </div>
+</div>
+
+{% endblock %}
