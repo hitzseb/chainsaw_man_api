@@ -30,7 +30,6 @@ class SagaUpdateView(AdminRequiredMixin, UpdateView):
     form_class = SagaForm
     template_name = 'form.html'
     context_object_name = 'manga'
-    pk_url_kwarg = 'number'
     success_url = '/saga/'
     
     def get_context_data(self, **kwargs):
@@ -42,5 +41,5 @@ class SagaUpdateView(AdminRequiredMixin, UpdateView):
 
 class SagaDeleteView(AdminRequiredMixin, DeleteView):
     model = Saga
-    pk_url_kwarg = 'number'
+    template_name = 'confirm_delete.html'
     success_url = '/saga/'

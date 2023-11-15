@@ -8,11 +8,14 @@
     <h2>Anime</h2>
     <ul class="list-group">
       {% for anime in anime_list %}
-      <a class="text-decoration-none" href="{% url 'anime_update' number=anime.number %}">
-        <li class="list-group-item list-group-item-action">
+      <li class="list-group-item list-group-item-action">
+        <a class="text-decoration-none" href="{% url 'anime_update' pk=anime.pk %}">
           {{ anime.number }}-{{ anime.title }}
-        </li>
-      </a>
+        </a>
+        <a class="text-decoration-none text-danger float-end" href="{% url 'anime_delete' pk=anime.pk %}">
+          Eliminar
+        </a>
+      </li>
       {% endfor %}
     </ul>
     <a class="btn" href="{% url 'anime_create' %}">Add Anime</a>

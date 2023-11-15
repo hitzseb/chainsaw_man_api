@@ -30,7 +30,6 @@ class SeasonUpdateView(AdminRequiredMixin, UpdateView):
     form_class = SeasonForm
     template_name = 'form.html'
     context_object_name = 'season'
-    pk_url_kwarg = 'number'
     success_url = '/season/'
     
     def get_context_data(self, **kwargs):
@@ -42,5 +41,5 @@ class SeasonUpdateView(AdminRequiredMixin, UpdateView):
 
 class SeasonDeleteView(AdminRequiredMixin, DeleteView):
     model = Season
-    pk_url_kwarg = 'number'
+    template_name = 'confirm_delete.html'
     success_url = '/season/'

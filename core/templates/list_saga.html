@@ -8,11 +8,14 @@
     <h2>Saga List</h2>
     <ul class="list-group">
       {% for saga in saga_list %}
-      <a class="text-decoration-none" href="{% url 'saga_update' number=saga.number %}">
-        <li class="list-group-item list-group-item-action">
+      <li class="list-group-item list-group-item-action">
+        <a class="text-decoration-none" href="{% url 'saga_update' pk=saga.pk %}">
           {{ saga.number }}-{{ saga.title }}
-        </li>
-      </a>
+        </a>
+        <a class="text-decoration-none text-danger float-end" href="{% url 'saga_delete' pk=saga.pk %}">
+          Eliminar
+        </a>
+      </li>
       {% endfor %}
     </ul>
     <a class="btn" href="{% url 'saga_create' %}">Add Saga</a>

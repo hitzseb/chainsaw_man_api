@@ -26,7 +26,6 @@ class CharacterUpdateView(AdminRequiredMixin, UpdateView):
     form_class = CharacterForm
     template_name = 'form.html'
     context_object_name = 'character'
-    pk_url_kwarg = 'name'
     success_url = '/character/'
     
     def get_context_data(self, **kwargs):
@@ -36,5 +35,5 @@ class CharacterUpdateView(AdminRequiredMixin, UpdateView):
 
 class CharacterDeleteView(AdminRequiredMixin, DeleteView):
     model = Character
-    pk_url_kwarg = 'name'
+    template_name = 'confirm_delete.html'
     success_url = '/character/'

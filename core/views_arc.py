@@ -30,7 +30,6 @@ class ArcUpdateView(AdminRequiredMixin, UpdateView):
     form_class = ArcForm
     template_name = 'form.html'
     context_object_name = 'arc'
-    pk_url_kwarg = 'number'
     success_url = '/arc/'
     
     def get_context_data(self, **kwargs):
@@ -42,5 +41,5 @@ class ArcUpdateView(AdminRequiredMixin, UpdateView):
 
 class ArcDeleteView(AdminRequiredMixin, DeleteView):
     model = Arc
-    pk_url_kwarg = 'number'
+    template_name = 'confirm_delete.html'
     success_url = '/arc/'

@@ -30,7 +30,6 @@ class AnimeUpdateView(AdminRequiredMixin, UpdateView):
     form_class = AnimeForm
     template_name = 'form.html'
     context_object_name = 'anime'
-    pk_url_kwarg = 'number'
     success_url = '/anime/'
     
     def get_context_data(self, **kwargs):
@@ -42,5 +41,5 @@ class AnimeUpdateView(AdminRequiredMixin, UpdateView):
 
 class AnimeDeleteView(AdminRequiredMixin, DeleteView):
     model = Anime
-    pk_url_kwarg = 'number'
+    template_name = 'confirm_delete.html'
     success_url = '/anime/'

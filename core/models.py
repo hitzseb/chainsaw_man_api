@@ -61,7 +61,7 @@ class Anime(models.Model):
         return f'{self.number} | {self.title}'
     
 class Species(models.Model):
-    name = models.CharField(max_length=25)
+    name = models.CharField(unique=True, max_length=25)
     description = models.TextField(null=True, blank=True)
     
     def __str__(self):
@@ -75,7 +75,7 @@ class Character(models.Model):
     species = models.ForeignKey(Species, on_delete=models.SET_NULL, null=True, blank=True, related_name='characters')
     manga_debut = models.ForeignKey(Manga, on_delete=models.SET_NULL, null=True, blank=True)
     anime_debut = models.ForeignKey(Anime, on_delete=models.SET_NULL, null=True, blank=True)
-    seiyu = models.CharField(unique=True, max_length=50)
+    seiyu = models.CharField(unique=True, max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.name

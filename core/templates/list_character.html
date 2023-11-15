@@ -8,11 +8,14 @@
     <h2>Character List</h2>
     <ul class="list-group">
       {% for character in character_list %}
-      <a class="text-decoration-none" href="{% url 'character_update' name=character.name %}">
-        <li class="list-group-item list-group-item-action">
+      <li class="list-group-item list-group-item-action">
+        <a class="text-decoration-none" href="{% url 'character_update' pk=character.pk %}">
           {{ character.name }}
-        </li>
-      </a>
+        </a>
+        <a class="text-decoration-none text-danger float-end" href="{% url 'character_delete' pk=character.pk %}">
+          Eliminar
+        </a>
+      </li>
       {% endfor %}
     </ul>
     <a class="btn" href="{% url 'character_create' %}">Add Character</a>

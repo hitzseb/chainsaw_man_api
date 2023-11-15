@@ -8,11 +8,14 @@
     <h2>Volume List</h2>
     <ul class="list-group">
       {% for volume in volume_list %}
-      <a class="text-decoration-none" href="{% url 'volume_update' number=volume.number %}">
-        <li class="list-group-item list-group-item-action">
+      <li class="list-group-item list-group-item-action">
+        <a class="text-decoration-none" href="{% url 'volume_update' pk=volume.pk %}">
           {{ volume.number }}-{{ volume.title }}
-        </li>
-      </a>
+        </a>
+        <a class="text-decoration-none text-danger float-end" href="{% url 'volume_delete' pk=volume.pk %}">
+          Eliminar
+        </a>
+      </li>
       {% endfor %}
     </ul>
     <a class="btn" href="{% url 'volume_create' %}">Add Volume</a>

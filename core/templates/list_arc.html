@@ -8,11 +8,14 @@
     <h2>Arc List</h2>
     <ul class="list-group">
       {% for arc in arc_list %}
-      <a class="text-decoration-none" href="{% url 'arc_update' number=arc.number %}">
-        <li class="list-group-item list-group-item-action">
+      <li class="list-group-item list-group-item-action">
+        <a class="text-decoration-none" href="{% url 'arc_update' pk=arc.pk %}">
           {{ arc.number }}-{{ arc.title }}
-        </li>
-      </a>
+        </a>
+        <a class="text-decoration-none text-danger float-end" href="{% url 'arc_delete' pk=arc.pk %}">
+          Eliminar
+        </a>
+      </li>
       {% endfor %}
     </ul>
     <a class="btn" href="{% url 'arc_create' %}">Add Arc</a>

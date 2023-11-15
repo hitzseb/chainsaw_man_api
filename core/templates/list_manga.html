@@ -8,11 +8,14 @@
     <h2>Manga List</h2>
     <ul class="list-group">
       {% for manga in manga_list %}
-      <a class="text-decoration-none" href="{% url 'manga_update' number=manga.number %}">
-        <li class="list-group-item list-group-item-action">
+      <li class="list-group-item list-group-item-action">
+        <a class="text-decoration-none" href="{% url 'manga_update' pk=manga.pk %}">
           {{ manga.number }}-{{ manga.title }}
-        </li>
-      </a>
+        </a>
+        <a class="text-decoration-none text-danger float-end" href="{% url 'manga_delete' pk=manga.pk %}">
+          Eliminar
+        </a>
+      </li>
       {% endfor %}
     </ul>
     <a class="btn" href="{% url 'manga_create' %}">Add Manga</a>

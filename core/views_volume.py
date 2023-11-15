@@ -30,7 +30,6 @@ class VolumeUpdateView(AdminRequiredMixin, UpdateView):
     form_class = VolumeForm
     template_name = 'form.html'
     context_object_name = 'volume'
-    pk_url_kwarg = 'number'
     success_url = '/volume/'
     
     def get_context_data(self, **kwargs):
@@ -42,5 +41,5 @@ class VolumeUpdateView(AdminRequiredMixin, UpdateView):
 
 class VolumeDeleteView(AdminRequiredMixin, DeleteView):
     model = Volume
-    pk_url_kwarg = 'number'
+    template_name = 'confirm_delete.html'
     success_url = '/volume/'

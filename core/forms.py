@@ -39,4 +39,4 @@ class SpeciesForm(forms.ModelForm):
 class CharacterForm(forms.ModelForm):
     class Meta:
         model = Character
-        fields = ['name', 'picture', 'description', 'status', 'species', 'manga_debut', 'anime_debut']
+        fields = ['name', 'picture', 'description', 'status', 'species', 'manga_debut', 'anime_debut', 'seiyu']

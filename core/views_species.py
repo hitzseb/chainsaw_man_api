@@ -30,7 +30,6 @@ class SpeciesUpdateView(AdminRequiredMixin, UpdateView):
     form_class = SpeciesForm
     template_name = 'form.html'
     context_object_name = 'species'
-    pk_url_kwarg = 'name'
     success_url = '/species/'
     
     def get_context_data(self, **kwargs):
@@ -42,5 +41,5 @@ class SpeciesUpdateView(AdminRequiredMixin, UpdateView):
 
 class SpeciesDeleteView(AdminRequiredMixin, DeleteView):
     model = Species
-    pk_url_kwarg = 'name'
+    template_name = 'confirm_delete.html'
     success_url = '/species/'

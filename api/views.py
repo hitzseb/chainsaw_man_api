@@ -9,7 +9,7 @@ class SagaListView(ListAPIView):
 # Get all arcs
 class ArcListView(ListAPIView):
     queryset = Arc.objects.all()
-    serializer_class = ArcSerializerSm
+    serializer_class = ArcSerializer
     
 # Get all volumes
 class VolumeListView(ListAPIView):
@@ -23,7 +23,7 @@ class MangaRetrieveView(RetrieveAPIView):
     
     def get_queryset(self):
         number = self.kwargs['number']
-        return Anime.objects.filter(number=number)
+        return Manga.objects.filter(number=number)
     
 # Get all seasons
 class SeasonListView(ListAPIView):
@@ -39,6 +39,21 @@ class AnimeRetrieveView(RetrieveAPIView):
         number = self.kwargs['number']
         return Anime.objects.filter(number=number)
     
+# Get all species
+
+class SpeciesListView(ListAPIView):
+    queryset = Species.objects.all()
+    serializer_class = SpeciesSerializerSm
+
+# Get species by name
+class SpeciesRetrieveView(RetrieveAPIView):
+    serializer_class = SpeciesSerializer
+    lookup_field = 'name'
+    
+    def get_queryset(self):
+        name = self.kwargs['name']
+        return Species.objects.filter(name=name)
+    
 # Get all characters
 class CharacterListView(ListAPIView):
     queryset = Character.objects.all()
@@ -51,13 +66,4 @@ class CharacterRetrieveView(RetrieveAPIView):
     
     def get_queryset(self):
         name = self.kwargs['name']
-        return Anime.objects.filter(name=name)
-    
-# Get species by name
-class SpeciesRetrieveView(RetrieveAPIView):
-    serializer_class = SpeciesSerializer
-    lookup_field = 'name'
-    
-    def get_queryset(self):
-        name = self.kwargs['name']
-        return Anime.objects.filter(name=name)
+        return Character.objects.filter(name=name)
