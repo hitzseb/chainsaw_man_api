@@ -53,15 +53,16 @@ class SagaSerializer(serializers.ModelSerializer):
         
 class ArcSerializer(serializers.ModelSerializer):
     saga = SagaSerializerSm(many=False, read_only=True)
+    chapters = MangaSerializerSm(many=True, read_only=True)
     class Meta:
         model = Arc
-        fields = ['number', 'title', 'plot', 'saga']
+        fields = ['number', 'title', 'plot', 'saga', 'chapters']
         
 class VolumeSerializer(serializers.ModelSerializer):
-    manga = MangaSerializerSm(many=True, read_only=True)
+    chapters = MangaSerializerSm(many=True, read_only=True)
     class Meta:
         model = Volume
-        fields = ['number', 'title', 'date', 'plot', 'cover', 'manga']
+        fields = ['number', 'title', 'date', 'plot', 'cover', 'chapters']
         
 class MangaSerializer(serializers.ModelSerializer):
     volume = VolumeSerializerSm(many=False, read_only=True)
