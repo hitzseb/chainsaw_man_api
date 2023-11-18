@@ -21,8 +21,8 @@ def register_view(request):
             user.confirmation_token = secrets.token_urlsafe(32)
             user.username = user.email
             user.save()
-            subject = 'Confirma tu cuenta'
-            message = f'Por favor, sigue este enlace para confirmar tu cuenta: http://127.0.0.1:8000/accounts/confirm/{user.confirmation_token}'
+            subject = 'Confirm your account'
+            message = f'Thank you for registering in the Chainsaw Man API. Please follow this link to activate your account: http://127.0.0.1:8000/accounts/confirm/{user.confirmation_token}'
             from_email = 'hitzseb.test@gmail.com'
             recipient_list = [user.email]
             send_mail(subject, message, from_email, recipient_list, fail_silently=False)
@@ -57,7 +57,7 @@ def confirm_email(request, token):
     try:
         user = User.objects.get(confirmation_token=token)
     except User.DoesNotExist:
-        return HttpResponse('Token inválido')
+        return HttpResponse('Invalid token')
     user.is_active = True
     user.confirmation_token = ''
     user.save()
