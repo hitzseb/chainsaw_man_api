@@ -92,7 +92,7 @@ class SpeciesSerializer(serializers.ModelSerializer):
         fields = ['name', 'description', 'characters']
         
 class CharacterSerializer(serializers.ModelSerializer):
-    species = SagaSerializerSm(many=False, read_only=True)
+    species = SpeciesSerializerSm(many=False, read_only=True)
     manga_debut = MangaSerializerSm(many=False, read_only=True)
     anime_debut = AnimeSerializerSm(many=False, read_only=True)
     class Meta:

@@ -11,5 +11,4 @@ urlpatterns = [
     path('character/', CharacterListView.as_view(), name='character_list_drf'),
     path('character/<str:name>/', CharacterRetrieveView.as_view(), name='character_detail_drf'),
     path('species/', SpeciesListView.as_view(), name='species_list_drf'),
-    path('species/<str:name>/', SpeciesRetrieveView.as_view(), name='species_detail_drf'),
 ]

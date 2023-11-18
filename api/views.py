@@ -43,16 +43,7 @@ class AnimeRetrieveView(RetrieveAPIView):
 
 class SpeciesListView(ListAPIView):
     queryset = Species.objects.all()
-    serializer_class = SpeciesSerializerSm
-
-# Get species by name
-class SpeciesRetrieveView(RetrieveAPIView):
     serializer_class = SpeciesSerializer
-    lookup_field = 'name'
-    
-    def get_queryset(self):
-        name = self.kwargs['name']
-        return Species.objects.filter(name=name)
     
 # Get all characters
 class CharacterListView(ListAPIView):
