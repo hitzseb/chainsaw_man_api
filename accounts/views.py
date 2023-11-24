@@ -12,6 +12,7 @@ from .forms import *
 
 # Register
 
+
 def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -26,18 +27,20 @@ def register_view(request):
             {SERVER_URL}accounts/confirm/{user.confirmation_token}'''
             from_email = MY_EMAIL_HOST_USER
             recipient_list = [user.email]
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+            send_mail(subject, message, from_email,
+                      recipient_list, fail_silently=False)
             message = '''We have sent an email to you for verification. 
             Follow the link provided to finalize the signup process. If 
             you do not see the verification email in your main inbox, 
             check your spam folder. Please contact us if you do not 
             receive the verification email within a few minutes.'''
-            return render(request, 'message.html', {'message':message})
+            return render(request, 'message.html', {'message': message})
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
 
 # Login
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -51,12 +54,14 @@ def login_view(request):
     return render(request, 'login.html', {'form': form})
 
 # Logout
- 
+
+
 def logout_view(request):
     logout(request)
     return redirect('home')
 
 # Email confirmation
+
 
 def confirm_email(request, token):
     User = get_user_model()
@@ -64,14 +69,15 @@ def confirm_email(request, token):
         user = User.objects.get(confirmation_token=token)
     except User.DoesNotExist:
         message = 'Invalid token'
-        return render(request, 'message.html', {'message':message})
+        return render(request, 'message.html', {'message': message})
     user.is_active = True
     user.confirmation_token = ''
     user.save()
     message = 'Email verification success. Your account is now activated.'
-    return render(request, 'message.html', {'message':message})
+    return render(request, 'message.html', {'message': message})
 
 # Reset Password
+
 
 def password_reset_request(request):
     if request.method == 'POST':
@@ -82,17 +88,18 @@ def password_reset_request(request):
             user.confirmation_token = secrets.token_urlsafe(32)
             user.save()
             reset_url = f'{SERVER_URL}accounts/reset/{user.confirmation_token}/'
-
             subject = 'Change password'
             message = f'Please follow this link to reset your password: {reset_url}'
             from_email = MY_EMAIL_HOST_USER
             recipient_list = [user.email]
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+            send_mail(subject, message, from_email,
+                      recipient_list, fail_silently=False)
             message = 'We sent you an email with instructions to reset your password.'
-            return render(request, 'message.html', {'message':message})
+            return render(request, 'message.html', {'message': message})
     else:
         form = CustomPasswordResetForm()
     return render(request, 'password_reset_request.html', {'form': form})
+
 
 def password_reset(request, token):
     user = get_object_or_404(CustomUser, confirmation_token=token)
@@ -107,13 +114,13 @@ def password_reset(request, token):
                 user.set_password(password1)
                 user.confirmation_token = ''
                 user.save()
-                message = 'Password uccesfully changed.'
-                return render(request, 'message.html', {'message':message})
+                message = 'Password succesfully changed.'
+                return render(request, 'message.html', {'message': message})
             except ValidationError as e:
                 message = ', '.join(e.messages)
                 return render(request, 'message.html', {'message': message})
         else:
             message = 'Passwords do not match.'
-            return render(request, 'message.html', {'message':message})
-    
+            return render(request, 'message.html', {'message': message})
+
     return render(request, 'password_reset.html', {'user': user})
