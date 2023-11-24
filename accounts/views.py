@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from .models import CustomUser
+from constants import MY_EMAIL_HOST_USER, SERVER_URL
 from .forms import *
 
 # Register
@@ -20,11 +21,18 @@ def register_view(request):
             user.username = user.email
             user.save()
             subject = 'Confirm your account'
-            message = f'Thank you for registering in the Chainsaw Man API. Please follow this link to activate your account: http://127.0.0.1:8000/accounts/confirm/{user.confirmation_token}'
-            from_email = 'hitzseb.test@gmail.com'
+            message = f'''Thank you for registeringin the Chainsaw Man API. 
+            Please follow this link to activate your account: 
+            {SERVER_URL}accounts/confirm/{user.confirmation_token}'''
+            from_email = MY_EMAIL_HOST_USER
             recipient_list = [user.email]
             send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-            return render(request, 'verification_sent.html')
+            message = '''We have sent an email to you for verification. 
+            Follow the link provided to finalize the signup process. If 
+            you do not see the verification email in your main inbox, 
+            check your spam folder. Please contact us if you do not 
+            receive the verification email within a few minutes.'''
+            return render(request, 'message.html', {'message':message})
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
@@ -55,11 +63,13 @@ def confirm_email(request, token):
     try:
         user = User.objects.get(confirmation_token=token)
     except User.DoesNotExist:
-        return HttpResponse('Invalid token')
+        message = 'Invalid token'
+        return render(request, 'message.html', {'message':message})
     user.is_active = True
     user.confirmation_token = ''
     user.save()
-    return render(request, 'confirmation_success.html')
+    message = 'Email verification success. Your account is now activated.'
+    return render(request, 'message.html', {'message':message})
 
 # Reset Password
 
@@ -71,14 +81,13 @@ def password_reset_request(request):
             user = get_object_or_404(CustomUser, username=email)
             user.confirmation_token = secrets.token_urlsafe(32)
             user.save()
-            reset_url = f'http://127.0.0.1:8000/accounts/reset/{user.confirmation_token}/'
+            reset_url = f'{SERVER_URL}accounts/reset/{user.confirmation_token}/'
 
             subject = 'Change password'
             message = f'Please follow this link to reset your password: {reset_url}'
-            from_email = 'chainsawmanapi@gmail.com'
+            from_email = MY_EMAIL_HOST_USER
             recipient_list = [user.email]
             send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-            # return render(request, 'custom_password_reset_done.html')
             message = 'We sent you an email with instructions to reset your password.'
             return render(request, 'message.html', {'message':message})
     else:
