@@ -1,17 +1,15 @@
 import secrets
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.mail import send_mail
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from .models import CustomUser
 from constants import MY_EMAIL_HOST_USER, SERVER_URL
+from .models import CustomUser
 from .forms import *
 
 # Register
-
 
 def register_view(request):
     if request.method == 'POST':
@@ -62,7 +60,6 @@ def logout_view(request):
 
 # Email confirmation
 
-
 def confirm_email(request, token):
     User = get_user_model()
     try:
@@ -77,7 +74,6 @@ def confirm_email(request, token):
     return render(request, 'message.html', {'message': message})
 
 # Reset Password
-
 
 def password_reset_request(request):
     if request.method == 'POST':
