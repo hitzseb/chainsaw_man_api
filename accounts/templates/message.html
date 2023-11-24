@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="col-sm-12 col-md-11 col-lg-10 col-xl-9 col-xxl-8 mx-auto">
+        <p class="lead fw-bold">{{ message }}</p>
+        <a class="btn" href="{% url 'home' %}">Back home</a>
+    </div>
+</div>
+{% endblock %}

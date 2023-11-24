@@ -1,15 +1,13 @@
 import secrets
 from django.http import HttpResponse
-from django.shortcuts import render
-from django.shortcuts import render, redirect
-
-from django.contrib.auth import login, logout
+from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import get_user_model
-
 from django.core.mail import send_mail
-
-from .forms import RegisterForm
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from .models import CustomUser
+from .forms import *
 
 # Register
 
@@ -62,3 +60,51 @@ def confirm_email(request, token):
     user.confirmation_token = ''
     user.save()
     return render(request, 'confirmation_success.html')
+
+# Reset Password
+
+def password_reset_request(request):
+    if request.method == 'POST':
+        form = CustomPasswordResetForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            user = get_object_or_404(CustomUser, username=email)
+            user.confirmation_token = secrets.token_urlsafe(32)
+            user.save()
+            reset_url = f'http://127.0.0.1:8000/accounts/reset/{user.confirmation_token}/'
+
+            subject = 'Change password'
+            message = f'Please follow this link to reset your password: {reset_url}'
+            from_email = 'chainsawmanapi@gmail.com'
+            recipient_list = [user.email]
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+            # return render(request, 'custom_password_reset_done.html')
+            message = 'We sent you an email with instructions to reset your password.'
+            return render(request, 'message.html', {'message':message})
+    else:
+        form = CustomPasswordResetForm()
+    return render(request, 'password_reset_request.html', {'form': form})
+
+def password_reset(request, token):
+    user = get_object_or_404(CustomUser, confirmation_token=token)
+
+    if request.method == 'POST':
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        if password1 and password1 == password2:
+            try:
+                validate_password(password1, user=user)
+                user.set_password(password1)
+                user.confirmation_token = ''
+                user.save()
+                message = 'Password uccesfully changed.'
+                return render(request, 'message.html', {'message':message})
+            except ValidationError as e:
+                message = ', '.join(e.messages)
+                return render(request, 'message.html', {'message': message})
+        else:
+            message = 'Passwords do not match.'
+            return render(request, 'message.html', {'message':message})
+    
+    return render(request, 'password_reset.html', {'user': user})
