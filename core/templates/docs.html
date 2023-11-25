@@ -7,15 +7,20 @@
     <div class="row">
 
         <div class="col-sm-12 col-md-11 col-lg-10 col-xl-9 col-xxl-8 mx-auto">
+
             <h2>Endpoints</h2>
+
             {% for endpoint in endpoints %}
             <p class="my-4 text-break">
                 <span class="fw-bold me-1">{{ endpoint.url }}</span>
                 {{ endpoint.description }}
             </p>
             {% endfor %}
-            <a href="{% url 'schema-swagger-ui' %}" target="_blank">Swagger documentation</a>
+
+            <a class="link-secondary" href="{% url 'schema-swagger-ui' %}" target="_blank">Swagger documentation</a>
+
             <h2 class="mt-5">Usage</h2>
+
             <p class="my-4">
                 <span class="fw-bold me-1">Authentication:</span>
                 JWT tokens are required for enhanced access. Anonymous users can make a limited number of requests

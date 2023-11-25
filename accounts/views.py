@@ -39,20 +39,18 @@ def register_view(request):
 
 # Login
 
-
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
+        form = LoginForm(request, request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
             return redirect(request.GET.get('next', 'home'))
     else:
-        form = AuthenticationForm()
+        form = LoginForm()
     return render(request, 'login.html', {'form': form})
 
 # Logout
-
 
 def logout_view(request):
     logout(request)
@@ -73,7 +71,7 @@ def confirm_email(request, token):
     message = 'Email verification success. Your account is now activated.'
     return render(request, 'message.html', {'message': message})
 
-# Reset Password
+# Password recovery
 
 def password_reset_request(request):
     if request.method == 'POST':
