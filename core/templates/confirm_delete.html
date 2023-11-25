@@ -3,10 +3,14 @@
 {% block content %}
 
 <div class="container my-4">
-  <form method="post">{% csrf_token %}
-    <p class="lead">Are you sure you want to delete "{{ object }}"?</p>
-    <input class="btn" type="submit" value="Confirm">
-  </form>
+  <div class="col-sm-12 col-md-11 col-lg-10 col-xl-9 col-xxl-8 mx-auto">
+
+    <form method="post">{% csrf_token %}
+      <p class="lead">Are you sure you want to delete "{{ object }}"?</p>
+      <input class="btn btn-outline-dark" type="submit" value="Confirm">
+    </form>
+      
+  </div>
 </div>
 
 {% endblock %}

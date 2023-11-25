@@ -6,11 +6,12 @@
   <div class="col-sm-12 col-md-11 col-lg-10 col-xl-9 col-xxl-8 mx-auto">
 
     <h2>Species List</h2>
+
     <ul class="list-group">
       {% for species in species_list %}
-      <li class="list-group-item list-group-item-action">
-        <a class="text-decoration-none" href="{% url 'species_update' pk=species.pk %}">
-          {{ season.name }}
+      <li class="list-group-item list-group-item-action bg-body-tertiary">
+        <a class="text-decoration-none link-dark fw-bold" href="{% url 'species_update' pk=species.pk %}">
+          {{ species.name }}
         </a>
         <a class="text-decoration-none text-danger float-end" href="{% url 'species_delete' pk=species.pk %}">
           Eliminar
@@ -18,7 +19,8 @@
       </li>
       {% endfor %}
     </ul>
-    <a class="btn" href="{% url 'species_create' %}">Add Species</a>
+
+    <a class="btn btn-outline-dark mt-3" href="{% url 'species_create' %}">Add Species</a>
     
   </div>
 </div>

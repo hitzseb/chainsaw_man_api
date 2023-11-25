@@ -3,9 +3,9 @@ from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, Authe
 from .models import CustomUser
 
 class RegisterForm(UserCreationForm):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'shadow-none border-warning'}))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'shadow-none border-warning'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'shadow-none border-warning'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'shadow-none border-dark'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'shadow-none border-dark'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'shadow-none border-dark'}))
     
     class Meta:
         model = CustomUser
@@ -14,11 +14,11 @@ class RegisterForm(UserCreationForm):
 class LoginForm(AuthenticationForm):
     username = forms.EmailField(
         label="Email",
-        widget=forms.TextInput(attrs={'class': 'shadow-none border-warning'}),
+        widget=forms.TextInput(attrs={'class': 'shadow-none border-dark'}),
     )
     password = forms.CharField(
         label="Password",
-        widget=forms.PasswordInput(attrs={'class': 'shadow-none border-warning'}),
+        widget=forms.PasswordInput(attrs={'class': 'shadow-none border-dark'}),
     )
     
     class Meta:
@@ -26,7 +26,7 @@ class LoginForm(AuthenticationForm):
         fields = ['username', 'password']
         
 class CustomPasswordResetForm(PasswordResetForm):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'shadow-none border-warning'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'shadow-none border-dark'}))
     class Meta:
         model = CustomUser
         fields = ['email']

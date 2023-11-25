@@ -6,10 +6,11 @@
   <div class="col-sm-12 col-md-11 col-lg-10 col-xl-9 col-xxl-8 mx-auto">
 
     <h2>Character List</h2>
+
     <ul class="list-group">
       {% for character in character_list %}
-      <li class="list-group-item list-group-item-action">
-        <a class="text-decoration-none" href="{% url 'character_update' pk=character.pk %}">
+      <li class="list-group-item list-group-item-action bg-body-tertiary">
+        <a class="text-decoration-none link-dark fw-bold" href="{% url 'character_update' pk=character.pk %}">
           {{ character.name }}
         </a>
         <a class="text-decoration-none text-danger float-end" href="{% url 'character_delete' pk=character.pk %}">
@@ -18,7 +19,8 @@
       </li>
       {% endfor %}
     </ul>
-    <a class="btn" href="{% url 'character_create' %}">Add Character</a>
+
+    <a class="btn btn-outline-dark mt-3" href="{% url 'character_create' %}">Add Character</a>
     
   </div>
 </div>
