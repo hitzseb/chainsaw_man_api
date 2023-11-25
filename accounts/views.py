@@ -10,6 +10,7 @@ from .forms import *
 
 # Register
 
+
 def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -19,24 +20,34 @@ def register_view(request):
             user.username = user.email
             user.save()
             subject = 'Confirm your account'
-            message = f'''Thank you for registeringin the Chainsaw Man API. 
+            message = f'''
+            Hello,
+            
+            Thank you for registeringin the Chainsaw Man API.
+            
             Please follow this link to activate your account: 
-            {SERVER_URL}accounts/confirm/{user.confirmation_token}'''
+            {SERVER_URL}accounts/confirm/{user.confirmation_token}
+            
+            Chainsaw Man API
+            '''
             from_email = MY_EMAIL_HOST_USER
             recipient_list = [user.email]
             send_mail(subject, message, from_email,
                       recipient_list, fail_silently=False)
-            message = '''We have sent an email to you for verification. 
+            message = '''
+            We have sent an email to you for verification. 
             Follow the link provided to finalize the signup process. If 
             you do not see the verification email in your main inbox, 
             check your spam folder. Please contact us if you do not 
-            receive the verification email within a few minutes.'''
+            receive the verification email within a few minutes.
+            '''
             return render(request, 'message.html', {'message': message})
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
 
 # Login
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -51,11 +62,13 @@ def login_view(request):
 
 # Logout
 
+
 def logout_view(request):
     logout(request)
     return redirect('home')
 
 # Email confirmation
+
 
 def confirm_email(request, token):
     User = get_user_model()
@@ -72,6 +85,7 @@ def confirm_email(request, token):
 
 # Password recovery
 
+
 def password_reset_request(request):
     if request.method == 'POST':
         form = CustomPasswordResetForm(request.POST)
@@ -82,7 +96,16 @@ def password_reset_request(request):
             user.save()
             reset_url = f'{SERVER_URL}accounts/reset/{user.confirmation_token}/'
             subject = 'Change password'
-            message = f'Please follow this link to reset your password: {reset_url}'
+            message = f'''
+            Hello,
+            
+            We've received a request to reset the password for your account. If you didn't make this request, you can ignore this email.
+            
+            To reset your password, click on the following link:
+            {reset_url}
+            
+            Chainsaw Man API
+            '''
             from_email = MY_EMAIL_HOST_USER
             recipient_list = [user.email]
             send_mail(subject, message, from_email,
