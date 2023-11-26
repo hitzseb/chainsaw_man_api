@@ -2,6 +2,7 @@ from rest_framework import serializers
 from core.models import *
 
 # Small serializers
+# with partial data, used for nested serializers
 
 class SagaSerializerSm(serializers.ModelSerializer):
     class Meta:
@@ -44,6 +45,7 @@ class CharacterSerializerSm(serializers.ModelSerializer):
         fields = ['name', 'picture']
 
 # Full serializers
+# with complete data, used for main serializers
 
 class SagaSerializer(serializers.ModelSerializer):
     arcs = ArcSerializerSm(many=True, read_only=True)

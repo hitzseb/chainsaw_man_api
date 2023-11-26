@@ -9,15 +9,20 @@ from .models import CustomUser
 from .forms import *
 
 # Register
-
+# sets the confirmation token
+# sets the username as the email
+# saves the user and sends an email with a confirmation link
+# as /accounts/confirm/<confirmation_token>
+# user.is_active is set to False until the user clicks the link
 
 def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            user.confirmation_token = secrets.token_urlsafe(32)
+            user = form.save(commit=False)
+            token = secrets.token_urlsafe(32)
             user.username = user.email
+            user.confirmation_token = f'{user.username}_{token}'
             user.save()
             subject = 'Confirm your account'
             message = f'''
@@ -47,7 +52,9 @@ def register_view(request):
     return render(request, 'register.html', {'form': form})
 
 # Login
-
+# when the user logs in, 
+# it will be redirected to the page he was trying to access 
+# or to homepage in case of no next parameter
 
 def login_view(request):
     if request.method == 'POST':
@@ -62,13 +69,14 @@ def login_view(request):
 
 # Logout
 
-
 def logout_view(request):
     logout(request)
     return redirect('home')
 
 # Email confirmation
-
+# it verifies if the confirmation token is valid
+# by getting the user by the token
+# in that case it sets user.is_active to True
 
 def confirm_email(request, token):
     User = get_user_model()
@@ -84,7 +92,9 @@ def confirm_email(request, token):
     return render(request, 'message.html', {'message': message})
 
 # Password recovery
-
+# takes the email from the user 
+# sets a new confirmation token
+# and sends an email with a link that uses the confirmation token
 
 def password_reset_request(request):
     if request.method == 'POST':
@@ -92,7 +102,8 @@ def password_reset_request(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             user = get_object_or_404(CustomUser, username=email)
-            user.confirmation_token = secrets.token_urlsafe(32)
+            token = secrets.token_urlsafe(32)
+            user.confirmation_token = f'{user.username}_{token}'
             user.save()
             reset_url = f'{SERVER_URL}accounts/reset/{user.confirmation_token}/'
             subject = 'Change password'
@@ -116,6 +127,12 @@ def password_reset_request(request):
         form = CustomPasswordResetForm()
     return render(request, 'password_reset_request.html', {'form': form})
 
+# this is the actual password reset
+# it verifies if the confirmation token is valid
+# by getting the user by the token
+# in that case it shows the password reset form
+# with two fields for the new password
+# if they match and are valid, the password is changed
 
 def password_reset(request, token):
     user = get_object_or_404(CustomUser, confirmation_token=token)
