@@ -72,7 +72,7 @@ class MangaForm(forms.ModelForm):
     )
     characters = forms.ModelChoiceField(
         queryset=Character.objects.all(),
-        widget=forms.Select(attrs={'class': 'shadow-none border-dark'}),
+        widget=forms.SelectMultiple(attrs={'class': 'shadow-none border-dark'}),
     )
     
     class Meta:
@@ -125,7 +125,7 @@ class AnimeForm(forms.ModelForm):
     )
     characters = forms.ModelChoiceField(
         queryset=Character.objects.all(),
-        widget=forms.Select(attrs={'class': 'shadow-none border-dark'}),
+        widget=forms.SelectMultiple(attrs={'class': 'shadow-none border-dark'}),
     )
     
     class Meta:
