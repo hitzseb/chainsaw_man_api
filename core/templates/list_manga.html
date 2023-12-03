@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<div class="container my-4">
+<div class="container py-5 mb-5">
   <div class="col-sm-12 col-md-11 col-lg-10 col-xl-9 col-xxl-8 mx-auto">
 
     <h2>Manga List</h2>
 
-    <ul class="list-group">
+    <ul class="list-group my-4">
       {% for manga in manga_list %}
       <li class="list-group-item list-group-item-action bg-body-tertiary">
         <a class="text-decoration-none link-dark fw-bold" href="{% url 'manga_update' pk=manga.pk %}">
@@ -20,7 +20,7 @@
       {% endfor %}
     </ul>
 
-    <a class="btn btn-outline-dark mt-3" href="{% url 'manga_create' %}">Add Manga</a>
+    <a class="btn btn-dark mt-3" href="{% url 'manga_create' %}">Add Manga</a>
     
   </div>
 </div>

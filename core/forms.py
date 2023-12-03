@@ -64,7 +64,6 @@ class MangaForm(forms.ModelForm):
         required=False,
     )
     cover = forms.URLField(widget=forms.TextInput(attrs={'class': 'shadow-none border-dark'}), required=False)
-    plot = forms.CharField(widget=forms.Textarea(attrs={'class': 'shadow-none border-dark'}), required=False)
     volume = forms.ModelChoiceField(
         queryset=Volume.objects.all(),
         widget=forms.Select(attrs={'class': 'shadow-none border-dark'}),
@@ -83,7 +82,7 @@ class MangaForm(forms.ModelForm):
     
     class Meta:
         model = Manga
-        fields = ['number', 'title', 'date', 'cover', 'plot', 'volume', 'arc', 'characters']
+        fields = ['number', 'title', 'date', 'cover', 'volume', 'arc', 'characters']
         
 # SeasonForm
 
@@ -127,7 +126,6 @@ class AnimeForm(forms.ModelForm):
         ),
         required=False,
     )
-    plot = forms.CharField(widget=forms.Textarea(attrs={'class': 'shadow-none border-dark'}))
     season = forms.ModelChoiceField(
         queryset=Season.objects.all(),
         widget=forms.Select(attrs={'class': 'shadow-none border-dark'}),
@@ -141,7 +139,7 @@ class AnimeForm(forms.ModelForm):
     
     class Meta:
         model = Anime
-        fields = ['number', 'title', 'date', 'plot', 'season', 'characters']
+        fields = ['number', 'title', 'date', 'season', 'characters']
         
 # SpeciesForm
 

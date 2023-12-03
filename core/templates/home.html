@@ -4,15 +4,13 @@
 
 {% block content %}
 
-<div class="container my-5">
-    <div class="row">
+<div class="container-fluid py-5 mb-5">
 
-        <div class="col-sm-12 col-md-11 col-lg-10 col-xl-9 col-xxl-8 mx-auto text-center">
-            <img class="img-fluid" src="{% static 'img/banner.jpg' %}">
-            <p class="my-4">{{ api_description }}</p>
-        </div>
-    
+    <div class="col-sm-12 col-md-8 col-lg-7 col-xl-6 col-xxl-5 mx-auto text-center">
+        <img class="img-fluid mb-5" src="{% static 'img/banner.jpg' %}">
+        <p class="lh-lg">{{ api_description }}</p>
     </div>
+
 </div>
 
 {% endblock %}

@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<div class="container my-4">
+<div class="container py-5 mb-5">
   <div class="col-sm-12 col-md-11 col-lg-10 col-xl-9 col-xxl-8 mx-auto">
 
     <h2>Character List</h2>
 
-    <ul class="list-group">
+    <ul class="list-group my-4">
       {% for character in character_list %}
       <li class="list-group-item list-group-item-action bg-body-tertiary">
         <a class="text-decoration-none link-dark fw-bold" href="{% url 'character_update' pk=character.pk %}">
@@ -20,7 +20,7 @@
       {% endfor %}
     </ul>
 
-    <a class="btn btn-outline-dark mt-3" href="{% url 'character_create' %}">Add Character</a>
+    <a class="btn btn-dark mt-3" href="{% url 'character_create' %}">Add Character</a>
     
   </div>
 </div>

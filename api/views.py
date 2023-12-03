@@ -16,6 +16,11 @@ class VolumeListView(ListAPIView):
     queryset = Volume.objects.all()
     serializer_class = VolumeSerializer
     
+# Get all manga
+class MangaListView(ListAPIView):
+    queryset = Manga.objects.all()
+    serializer_class = MangaSerializerSm
+    
 # Get manga by number
 class MangaRetrieveView(RetrieveAPIView):
     serializer_class = MangaSerializer
@@ -29,6 +34,11 @@ class MangaRetrieveView(RetrieveAPIView):
 class SeasonListView(ListAPIView):
     queryset = Season.objects.all()
     serializer_class = SeasonSerializer
+    
+# Get all anime
+class AnimeListView(ListAPIView):
+    queryset = Anime.objects.all()
+    serializer_class = AnimeSerializerSm
     
 # Get anime by number
 class AnimeRetrieveView(RetrieveAPIView):

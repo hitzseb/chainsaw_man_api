@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from urllib.parse import quote
 from core.models import *
 
 # Small serializers
@@ -20,9 +21,14 @@ class VolumeSerializerSm(serializers.ModelSerializer):
         fields = ['number', 'title', 'cover']
         
 class MangaSerializerSm(serializers.ModelSerializer):
+    url = serializers.SerializerMethodField()
     class Meta:
         model = Manga
-        fields = ['number', 'title', 'cover'] 
+        fields = ['number', 'title', 'cover', 'url']
+        
+    def get_url(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(f'/api/manga/{obj.number}/')
 
 class SeasonSerializerSm(serializers.ModelSerializer):
     class Meta:
@@ -30,9 +36,14 @@ class SeasonSerializerSm(serializers.ModelSerializer):
         fields = ['number']
       
 class AnimeSerializerSm(serializers.ModelSerializer):
+    url = serializers.SerializerMethodField()
     class Meta:
         model = Anime
-        fields = ['number', 'title', 'date']
+        fields = ['number', 'title', 'date', 'url']
+        
+    def get_url(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(f'/api/anime/{obj.number}/')
         
 class SpeciesSerializerSm(serializers.ModelSerializer):
     class Meta:
@@ -40,9 +51,15 @@ class SpeciesSerializerSm(serializers.ModelSerializer):
         fields = ['name']
         
 class CharacterSerializerSm(serializers.ModelSerializer):
+    url = serializers.SerializerMethodField()
     class Meta:
         model = Character
-        fields = ['name', 'picture']
+        fields = ['name', 'picture', 'url']
+        
+    def get_url(self, obj):
+        request = self.context.get('request')
+        encoded_name = quote(obj.name)
+        return request.build_absolute_uri(f'/api/character/{encoded_name}/')
 
 # Full serializers
 # with complete data, used for main serializers
@@ -72,7 +89,7 @@ class MangaSerializer(serializers.ModelSerializer):
     characters = CharacterSerializerSm(many=True, read_only=True)
     class Meta:
         model = Manga
-        fields = ['number', 'title', 'date', 'cover', 'plot', 'volume', 'arc', 'characters']
+        fields = ['number', 'title', 'date', 'cover', 'volume', 'arc', 'characters']
         
 class SeasonSerializer(serializers.ModelSerializer):
     episodes = AnimeSerializerSm(many=True, read_only=True)
@@ -85,7 +102,7 @@ class AnimeSerializer(serializers.ModelSerializer):
     characters = CharacterSerializerSm(many=True, read_only=True)
     class Meta:
         model = Anime
-        fields = ['number', 'title', 'date', 'plot', 'season', 'characters']
+        fields = ['number', 'title', 'date', 'season', 'characters']
         
 class SpeciesSerializer(serializers.ModelSerializer):
     characters = CharacterSerializerSm(many=True, read_only=True)

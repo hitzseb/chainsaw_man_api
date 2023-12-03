@@ -55,15 +55,9 @@ class Manga(models.Model):
     title = models.CharField(max_length=50, null=True, blank=True)
     date = models.DateField(null=True, blank=True)
     cover = models.URLField(max_length=200, null=True, blank=True)
-    plot = models.TextField(null=True, blank=True)
     volume = models.ForeignKey(Volume, on_delete=models.SET_NULL, null=True, related_name='chapters')
     arc = models.ForeignKey(Arc, on_delete=models.SET_NULL, null=True, related_name='chapters')
     characters = models.ManyToManyField('Character', blank=True)
-
-    def save(self, *args, **kwargs):
-        self.plot = self.plot.replace('\r\n', '<br>')
-
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.number} | {self.title}'
@@ -90,14 +84,8 @@ class Anime(models.Model):
     number = models.IntegerField(unique=True)
     title = models.CharField(max_length=50, null=True, blank=True)
     date = models.DateField(null=True, blank=True)
-    plot = models.TextField(null=True, blank=True)
     season = models.ForeignKey(Season, on_delete=models.SET_NULL, null=True, related_name='episodes')
     characters = models.ManyToManyField('Character', blank=True, related_name='characters')
-
-    def save(self, *args, **kwargs):
-        self.plot = self.plot.replace('\r\n', '<br>')
-
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.number} | {self.title}'
