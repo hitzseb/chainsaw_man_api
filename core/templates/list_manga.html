@@ -14,7 +14,7 @@
           {{ manga.number }}-{{ manga.title }}
         </a>
         <a class="text-decoration-none text-danger float-end" href="{% url 'manga_delete' pk=manga.pk %}">
-          Eliminar
+          Delete
         </a>
       </li>
       {% endfor %}
