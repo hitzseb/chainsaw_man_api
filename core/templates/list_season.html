@@ -9,8 +9,8 @@
 
     <ul class="list-group my-4">
       {% for season in season_list %}
-      <li class="list-group-item list-group-item-action bg-body-tertiary">
-        <a class="text-decoration-none link-dark fw-bold" href="{% url 'season_update' pk=season.pk %}">
+      <li class="list-group-item list-group-item-action">
+        <a class="text-decoration-none fw-bold" href="{% url 'season_update' pk=season.pk %}">
           Season {{ season.number }}
         </a>
         <a class="text-decoration-none text-danger float-end" href="{% url 'season_delete' pk=season.pk %}">
@@ -20,7 +20,7 @@
       {% endfor %}
     </ul>
 
-    <a class="btn btn-dark mt-3" href="{% url 'season_create' %}">Add Season</a>
+    <a class="btn btn-primary mt-3" href="{% url 'season_create' %}">Add Season</a>
     
   </div>
 </div>

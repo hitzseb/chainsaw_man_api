@@ -6,9 +6,62 @@
 
 <div class="container-fluid py-5 mb-5">
 
-    <div class="col-sm-12 col-md-8 col-lg-7 col-xl-6 col-xxl-5 mx-auto text-center">
-        <img class="img-fluid mb-5" src="{% static 'img/banner.jpg' %}">
-        <p class="lh-lg">{{ api_description }}</p>
+    <div class="container p-5">
+
+        <p class="lead text-secondary lh-lg">{{ api_description }}</p>
+
+        <div class="text-center my-5">
+            <img class="img-fluid rounded" src="{% static 'img/banner.jpg' %}">
+        </div>
+
+        <p class="lead text-secondary lh-lg text-break">This is an example of a request you can do:
+            <span class="text-primary-emphasis">
+                ~$ curl https://chainsawmanapi.pythonanywhere.com/api/character/Pochita/  
+            </span>
+        </p>
+
+        <pre class="my-5">
+{
+    "name": "Pochita",
+    "picture": "https://static.wikia.nocookie.net/chainsaw-man/images/1/1b/Pochita.PNG",
+    "description": "Pochita (ポチタ?) is the Chainsaw Devil (チェンソーの悪あく魔ま Chensō no Akuma?) who embodies the fear of chainsaws. He was the original Chainsaw Man (チェンソーマン Chensō Man?) prior to becoming Denji's heart. He is the overarching titular protagonist of the series.",
+    "status": "Alive",
+    "species": {
+        "name": "Hybrid"
+    },
+    "manga_debut": {
+        "number": 1,
+        "title": "Dog & Chainsaw",
+        "cover": "https://static.wikia.nocookie.net/chainsaw-man/images/a/a6/Chapter_1_Title_Page.png",
+        "url": "https://chainsawmanapi.pythonanywhere.com/api/manga/1/"
+    },
+    "anime_debut": {
+        "number": 1,
+        "title": "Dog & Chainsaw",
+        "date": "2022-10-11",
+        "url": "https://chainsawmanapi.pythonanywhere.com/api/anime/1/"
+    }
+}
+        </pre>
+
+        <p class="lead text-secondary lh-lg">
+
+            This project was developed entirely using Django. It's made and maintained by
+            <a class="text-decoration-none" href="https://github.com/hitzseb" target="_blank">
+                {{my_name}}.
+            </a>
+
+            It's open source under MIT license. You can find the code
+            <a class="text-decoration-none" href="https://github.com/hitzseb/chainsaw_man_api" target="_blank">
+                here.
+            </a>
+            All the data is taken from the
+            <a class="text-decoration-none" href="https://chainsaw-man.fandom.com/wiki/Chainsaw_Man_Wiki"
+                target="_blank">
+                Chainsaw Man Wiki.
+            </a>
+        </p>
+
     </div>
 
 </div>

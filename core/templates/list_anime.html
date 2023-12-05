@@ -9,8 +9,8 @@
 
     <ul class="list-group my-4">
       {% for anime in anime_list %}
-      <li class="list-group-item list-group-item-action bg-body-tertiary">
-        <a class="text-decoration-none link-dark fw-bold" href="{% url 'anime_update' pk=anime.pk %}">
+      <li class="list-group-item list-group-item-action">
+        <a class="text-decoration-none fw-bold" href="{% url 'anime_update' pk=anime.pk %}">
           {{ anime.number }}-{{ anime.title }}
         </a>
         <a class="text-decoration-none text-danger float-end" href="{% url 'anime_delete' pk=anime.pk %}">
@@ -20,7 +20,7 @@
       {% endfor %}
     </ul>
     
-    <a class="btn btn-dark mt-3" href="{% url 'anime_create' %}">Add Anime</a>
+    <a class="btn btn-primary mt-3" href="{% url 'anime_create' %}">Add Anime</a>
     
   </div>
 </div>

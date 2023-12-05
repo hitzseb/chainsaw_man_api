@@ -9,8 +9,8 @@
 
     <ul class="list-group my-4">
       {% for species in species_list %}
-      <li class="list-group-item list-group-item-action bg-body-tertiary">
-        <a class="text-decoration-none link-dark fw-bold" href="{% url 'species_update' pk=species.pk %}">
+      <li class="list-group-item list-group-item-action">
+        <a class="text-decoration-none fw-bold" href="{% url 'species_update' pk=species.pk %}">
           {{ species.name }}
         </a>
         <a class="text-decoration-none text-danger float-end" href="{% url 'species_delete' pk=species.pk %}">
@@ -20,7 +20,7 @@
       {% endfor %}
     </ul>
 
-    <a class="btn btn-dark mt-3" href="{% url 'species_create' %}">Add Species</a>
+    <a class="btn btn-primary mt-3" href="{% url 'species_create' %}">Add Species</a>
     
   </div>
 </div>

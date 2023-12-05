@@ -4,38 +4,38 @@
 
 <div class="container-fluid py-5 mb-5">
 
-    <div class="col-sm-12 col-md-11 col-lg-10 col-xl-9 col-xxl-8 mx-auto lh-lg">
+    <div class="container p-5">
 
         <h2>Endpoints</h2>
 
         {% for endpoint in endpoints %}
-        <p class="text-break my-4">
+        <p class="text-secondary text-break my-4">
             <span class="fw-bold me-1">{{ endpoint.url }}</span>
             {{ endpoint.description }}
         </p>
         {% endfor %}
 
-        <a class="link-secondary link-underline link-underline-opacity-0 link-underline-opacity-75-hover fs-5" href="{% url 'schema-swagger-ui' %}" target="_blank">Swagger documentation</a>
+        <a class="text-decoration-none" href="{% url 'schema-swagger-ui' %}" target="_blank">Swagger documentation</a>
 
         <h2 class="mt-5">Usage</h2>
 
-        <p class="my-4">
+        <p class="text-secondary my-4">
             <span class="fw-bold me-1">Authentication:</span>
             JWT tokens are required for enhanced access. Anonymous users can make a limited number of requests
             without a token.
         </p>
-        <p class="my-4">
+        <p class="text-secondary my-4">
             <span class="fw-bold me-1">Throttling:</span>
             Requests without a token are subject to limited access. Authenticated users with a valid token enjoy
             higher throttling limits.
         </p>
-        <p class="my-4">
+        <p class="text-secondary my-4">
             <span class="fw-bold me-1">Token Usage:</span>
             Include the obtained access token in the Authorization header of your requests. To refresh the access
             token, use the refresh token at
             <span class="fw-bold ms-1">/api/token/refresh/</span>
         </p>
-        <p class="my-4">
+        <p class="text-secondary my-4">
             <span class="fw-bold me-1">Note:</span>
             Keep tokens secure and avoid sharing them publicly.
         </p>

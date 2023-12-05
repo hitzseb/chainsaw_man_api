@@ -10,17 +10,17 @@
         <h2>Login</h2>
 
         <div class="text-center">
-            <a class="link-secondary" href="{% url 'password_reset_request' %}">Forgot password</a>
+            <a href="{% url 'password_reset_request' %}">Forgot password</a>
         </div>
 
         <form method="post">
             {% csrf_token %}
             {{ form|crispy }}
-            <button class="btn btn-dark" type="submit">Login</button>
+            <button class="btn btn-primary" type="submit">Login</button>
         </form>
 
         <div class="text-center">
-            <a class="link-secondary" href="{% url 'register' %}">Register</a>
+            <a href="{% url 'register' %}">Register</a>
         </div>
         
     </div>

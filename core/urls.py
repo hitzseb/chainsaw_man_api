@@ -1,5 +1,5 @@
 from django.urls import path
-from .views_core import home, docs, about
+from .views_core import home, docs
 from .views_saga import SagaListView, SagaCreateView, SagaUpdateView, SagaDeleteView
 from .views_arc import ArcListView, ArcCreateView, ArcUpdateView, ArcDeleteView
 from .views_volume import VolumeListView, VolumeCreateView, VolumeUpdateView, VolumeDeleteView
@@ -12,7 +12,6 @@ from .views_character import CharacterListView, CharacterCreateView, CharacterUp
 urlpatterns = [
     path('', home, name='home'),
     path('docs/', docs, name='docs'),
-    path('about/', about, name='about'),
     # Saga
     path('saga/', SagaListView.as_view(), name='saga_list'),
     path('saga/create/', SagaCreateView.as_view(), name='saga_create'),

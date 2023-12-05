@@ -1,22 +1,17 @@
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
-from constants import API_DESCRIPTION, ENDPOINTS, MY_NAME
+from constants import API_DESCRIPTION, ENDPOINTS, MY_NAME, MY_EMAIL
 
 # Homepage
 
 def home(request):
-    return render(request, 'home.html', {'api_description':API_DESCRIPTION})
+    return render(request, 'home.html', {'api_description':API_DESCRIPTION, 'my_name':MY_NAME,'my_email':MY_EMAIL})
 
 # Docs
 
 def docs(request):
     return render(request, 'docs.html', {'endpoints':ENDPOINTS})
-
-# About
-
-def about(request):
-    return render(request, 'about.html', {'my_name':MY_NAME})
 
 # Checks if authenticated user is staff
 
