@@ -9,34 +9,34 @@
         <h2>Endpoints</h2>
 
         {% for endpoint in endpoints %}
-        <p class="text-secondary text-break my-4">
-            <span class="fw-bold me-1">{{ endpoint.url }}</span>
+        <p class="lead text-secondary text-break my-4">
+            <span class="text-light">{{ endpoint.url }}</span>
             {{ endpoint.description }}
         </p>
         {% endfor %}
 
-        <a class="text-decoration-none" href="{% url 'schema-swagger-ui' %}" target="_blank">Swagger documentation</a>
+        <a class="lead text-decoration-none" href="{% url 'schema-swagger-ui' %}" target="_blank">Swagger documentation</a>
 
         <h2 class="mt-5">Usage</h2>
 
-        <p class="text-secondary my-4">
-            <span class="fw-bold me-1">Authentication:</span>
+        <p class="lead text-secondary my-4">
+            <span class="text-light">Authentication:</span>
             JWT tokens are required for enhanced access. Anonymous users can make a limited number of requests
             without a token.
         </p>
-        <p class="text-secondary my-4">
-            <span class="fw-bold me-1">Throttling:</span>
+        <p class="lead text-secondary my-4">
+            <span class="text-light">Throttling:</span>
             Requests without a token are subject to limited access. Authenticated users with a valid token enjoy
             higher throttling limits.
         </p>
-        <p class="text-secondary my-4">
-            <span class="fw-bold me-1">Token Usage:</span>
+        <p class="lead text-secondary my-4">
+            <span class="text-light">Token Usage:</span>
             Include the obtained access token in the Authorization header of your requests. To refresh the access
             token, use the refresh token at
-            <span class="fw-bold ms-1">/api/token/refresh/</span>
+            <span class="text-light ms-1">/api/token/refresh/</span>
         </p>
-        <p class="text-secondary my-4">
-            <span class="fw-bold me-1">Note:</span>
+        <p class="lead text-secondary my-4">
+            <span class="text-light">Note:</span>
             Keep tokens secure and avoid sharing them publicly.
         </p>
 
