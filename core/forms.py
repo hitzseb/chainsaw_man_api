@@ -21,6 +21,9 @@ class VolumeForm(forms.ModelForm):
     class Meta:
         model = Volume
         fields = ['number', 'title', 'date', 'cover', 'plot']
+        widgets = {
+            'date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
         
 # MangaForm
 
@@ -28,6 +31,10 @@ class MangaForm(forms.ModelForm):
     class Meta:
         model = Manga
         fields = ['number', 'title', 'date', 'cover', 'volume', 'arc', 'characters']
+        widgets = {
+            'date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'characters': forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'height: 300px;'}),
+        }
         
 # SeasonForm
 
@@ -35,6 +42,9 @@ class SeasonForm(forms.ModelForm):
     class Meta:
         model = Season
         fields = ['number', 'plot', 'start_date', 'end_date']
+        widgets = {
+            'date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
         
 # AnimeForm
 
@@ -42,6 +52,10 @@ class AnimeForm(forms.ModelForm):
     class Meta:
         model = Anime
         fields = ['number', 'title', 'date', 'season', 'characters']
+        widgets = {
+            'date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'characters': forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'height: 300px;'}),
+        }
         
 # SpeciesForm
 

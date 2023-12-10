@@ -4,8 +4,8 @@ from django.db import models
 
 class Saga(models.Model):
     number = models.IntegerField(unique=True)
-    title = models.CharField(max_length=25, null=True, blank=True)
-    plot = models.TextField(null=True, blank=True)
+    title = models.CharField(max_length=25, blank=True, null=True)
+    plot = models.TextField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.plot = self.plot.replace('\r\n', '<br>')
@@ -19,9 +19,9 @@ class Saga(models.Model):
 
 class Arc(models.Model):
     number = models.IntegerField(unique=True)
-    title = models.CharField(max_length=50, null=True, blank=True)
-    plot = models.TextField(null=True, blank=True)
-    saga = models.ForeignKey(Saga, on_delete=models.SET_NULL, null=True, related_name='arcs')
+    title = models.CharField(max_length=50, blank=True, null=True)
+    plot = models.TextField(blank=True, null=True)
+    saga = models.ForeignKey(Saga, on_delete=models.SET_NULL, blank=True, null=True, related_name='arcs')
 
     def save(self, *args, **kwargs):
         self.plot = self.plot.replace('\r\n', '<br>')
@@ -35,10 +35,10 @@ class Arc(models.Model):
 
 class Volume(models.Model):
     number = models.IntegerField(unique=True)
-    title = models.CharField(max_length=50, null=True, blank=True)
-    date = models.DateField(null=True, blank=True)
-    cover = models.URLField(max_length=200, null=True, blank=True)
-    plot = models.TextField(null=True, blank=True)
+    title = models.CharField(max_length=50, blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
+    cover = models.URLField(max_length=200, blank=True, null=True)
+    plot = models.TextField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.plot = self.plot.replace('\r\n', '<br>')
@@ -52,11 +52,11 @@ class Volume(models.Model):
 
 class Manga(models.Model):
     number = models.IntegerField(unique=True)
-    title = models.CharField(max_length=50, null=True, blank=True)
-    date = models.DateField(null=True, blank=True)
-    cover = models.URLField(max_length=200, null=True, blank=True)
-    volume = models.ForeignKey(Volume, on_delete=models.SET_NULL, null=True, related_name='chapters')
-    arc = models.ForeignKey(Arc, on_delete=models.SET_NULL, null=True, related_name='chapters')
+    title = models.CharField(max_length=50, blank=True, null=True,)
+    date = models.DateField(blank=True, null=True,)
+    cover = models.URLField(max_length=200, blank=True, null=True,)
+    volume = models.ForeignKey(Volume, on_delete=models.SET_NULL, blank=True, null=True, related_name='chapters')
+    arc = models.ForeignKey(Arc, on_delete=models.SET_NULL, blank=True, null=True, related_name='chapters')
     characters = models.ManyToManyField('Character', blank=True)
 
     def __str__(self):
@@ -66,9 +66,9 @@ class Manga(models.Model):
 
 class Season(models.Model):
     number = models.IntegerField(unique=True)
-    plot = models.TextField(null=True, blank=True)
-    start_date = models.DateField(null=True, blank=True)
-    end_date = models.DateField(null=True, blank=True)
+    plot = models.TextField(blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.plot = self.plot.replace('\r\n', '<br>')
@@ -82,9 +82,9 @@ class Season(models.Model):
 
 class Anime(models.Model):
     number = models.IntegerField(unique=True)
-    title = models.CharField(max_length=50, null=True, blank=True)
-    date = models.DateField(null=True, blank=True)
-    season = models.ForeignKey(Season, on_delete=models.SET_NULL, null=True, related_name='episodes')
+    title = models.CharField(max_length=50, blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
+    season = models.ForeignKey(Season, on_delete=models.SET_NULL, blank=True, null=True, related_name='episodes')
     characters = models.ManyToManyField('Character', blank=True, related_name='characters')
 
     def __str__(self):
@@ -94,7 +94,7 @@ class Anime(models.Model):
 
 class Species(models.Model):
     name = models.CharField(unique=True, max_length=25)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.description = self.description.replace('\r\n', '<br>')
@@ -108,13 +108,13 @@ class Species(models.Model):
 
 class Character(models.Model):
     name = models.CharField(unique=True, max_length=50)
-    picture = models.URLField(max_length=200, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    status = models.CharField(max_length=50, null=True, blank=True)
-    species = models.ForeignKey(Species, on_delete=models.SET_NULL, null=True, blank=True, related_name='characters')
-    manga_debut = models.ForeignKey(Manga, on_delete=models.SET_NULL, null=True, blank=True)
-    anime_debut = models.ForeignKey(Anime, on_delete=models.SET_NULL, null=True, blank=True)
-    seiyu = models.CharField(max_length=50, null=True, blank=True)
+    picture = models.URLField(max_length=200, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=50, blank=True, null=True)
+    species = models.ForeignKey(Species, on_delete=models.SET_NULL, blank=True, null=True, related_name='characters')
+    manga_debut = models.ForeignKey(Manga, on_delete=models.SET_NULL, blank=True, null=True)
+    anime_debut = models.ForeignKey(Anime, on_delete=models.SET_NULL, blank=True, null=True)
+    seiyu = models.CharField(max_length=50, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.description = self.description.replace('\r\n', '<br>')
