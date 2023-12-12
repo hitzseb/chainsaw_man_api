@@ -30,7 +30,7 @@ class VolumeForm(forms.ModelForm):
 class MangaForm(forms.ModelForm):
     class Meta:
         model = Manga
-        fields = ['number', 'title', 'date', 'cover', 'volume', 'arc', 'characters']
+        fields = ['number', 'title', 'date', 'volume', 'arc', 'characters']
         widgets = {
             'date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'characters': forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'height: 300px;'}),

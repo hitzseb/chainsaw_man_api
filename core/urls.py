@@ -2,12 +2,12 @@ from django.urls import path
 from .views_core import home, docs
 from .views_saga import SagaListView, SagaCreateView, SagaUpdateView, SagaDeleteView
 from .views_arc import ArcListView, ArcCreateView, ArcUpdateView, ArcDeleteView
-from .views_volume import VolumeListView, VolumeCreateView, VolumeUpdateView, VolumeDeleteView
+from .views_volume import VolumeListView, VolumeCreateView, VolumeUpdateView, VolumeDeleteView, serve_volume_cover
 from .views_manga import MangaListView, MangaCreateView, MangaUpdateView, MangaDeleteView
 from .views_season import SeasonListView, SeasonCreateView, SeasonUpdateView, SeasonDeleteView
 from .views_anime import AnimeListView, AnimeCreateView, AnimeUpdateView, AnimeDeleteView
 from .views_species import SpeciesListView, SpeciesCreateView, SpeciesUpdateView, SpeciesDeleteView
-from .views_character import CharacterListView, CharacterCreateView, CharacterUpdateView, CharacterDeleteView
+from .views_character import CharacterListView, CharacterCreateView, CharacterUpdateView, CharacterDeleteView, serve_character_image
 
 urlpatterns = [
     path('', home, name='home'),
@@ -22,6 +22,7 @@ urlpatterns = [
     path('arc/create/', ArcCreateView.as_view(), name='arc_create'),
     path('arc/update/<int:pk>/', ArcUpdateView.as_view(), name='arc_update'),
     path('arc/delete/<int:pk>/', ArcDeleteView.as_view(), name='arc_delete'),
+    path('media/volume_covers/<str:image_filename>/', serve_volume_cover, name='serve_volume_cover'),
     # Volume
     path('volume/', VolumeListView.as_view(), name='volume_list'),
     path('volume/create/', VolumeCreateView.as_view(), name='volume_create'),
@@ -52,4 +53,5 @@ urlpatterns = [
     path('character/create/', CharacterCreateView.as_view(), name='character_create'),
     path('character/update/<int:pk>/', CharacterUpdateView.as_view(), name='character_update'),
     path('character/delete/<int:pk>/', CharacterDeleteView.as_view(), name='character_delete'),
+    path('media/character_images/<str:image_filename>/', serve_character_image, name='serve_character_image'),
 ]

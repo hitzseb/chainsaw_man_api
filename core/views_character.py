@@ -1,7 +1,13 @@
+import os
+from django.http import Http404
+
 from .views_core import AdminRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Character
 from .forms import CharacterForm
+from django.views.static import serve
+from django.conf import settings
+
 
 # Character views
 
@@ -37,3 +43,17 @@ class CharacterDeleteView(AdminRequiredMixin, DeleteView):
     model = Character
     template_name = 'confirm_delete.html'
     success_url = '/character/'
+    
+    
+def serve_character_image(request, image_filename):
+    # build image file path
+    image_path = os.path.join(settings.MEDIA_ROOT, 'character_images', image_filename)
+
+    # Verify if file exists
+    if not os.path.exists(image_path):
+        raise Http404(f"Image does not exist at {image_path}")
+
+    # Configure Content-Disposition header
+    response = serve(request, os.path.relpath(image_path, settings.MEDIA_ROOT), document_root=settings.MEDIA_ROOT)
+
+    return response

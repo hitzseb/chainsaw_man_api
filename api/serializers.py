@@ -39,7 +39,7 @@ class MangaSerializerSm(serializers.ModelSerializer):
     url = serializers.SerializerMethodField()
     class Meta:
         model = Manga
-        fields = ['number', 'title', 'cover', 'url']
+        fields = ['number', 'title', 'url']
         
     def get_url(self, obj):
         request = self.context.get('request')
@@ -115,7 +115,7 @@ class MangaSerializer(serializers.ModelSerializer):
     characters = CharacterSerializerSm(many=True, read_only=True)
     class Meta:
         model = Manga
-        fields = ['number', 'title', 'date', 'cover', 'volume', 'arc', 'characters']
+        fields = ['number', 'title', 'date', 'volume', 'arc', 'characters']
         
 class SeasonSerializer(serializers.ModelSerializer):
     episodes = AnimeSerializerSm(many=True, read_only=True)

@@ -1,4 +1,5 @@
 from django.db import models
+from PIL import Image;
 
 # Saga
 
@@ -37,13 +38,20 @@ class Volume(models.Model):
     number = models.IntegerField(unique=True)
     title = models.CharField(max_length=50, blank=True, null=True)
     date = models.DateField(blank=True, null=True)
-    cover = models.URLField(max_length=200, blank=True, null=True)
+    cover = models.ImageField(upload_to='volume_covers/', blank=True, null=True)
     plot = models.TextField(blank=True, null=True)
-
+        
     def save(self, *args, **kwargs):
         self.plot = self.plot.replace('\r\n', '<br>')
-
         super().save(*args, **kwargs)
+        if self.cover:
+            self.resize_image()
+
+    def resize_image(self):
+        image = Image.open(self.cover.path)
+        max_size = (500, 500)
+        image.thumbnail(max_size)
+        image.save(self.cover.path)
 
     def __str__(self):
         return f'{self.number} | {self.title}'
@@ -54,7 +62,6 @@ class Manga(models.Model):
     number = models.IntegerField(unique=True)
     title = models.CharField(max_length=50, blank=True, null=True,)
     date = models.DateField(blank=True, null=True,)
-    cover = models.URLField(max_length=200, blank=True, null=True,)
     volume = models.ForeignKey(Volume, on_delete=models.SET_NULL, blank=True, null=True, related_name='chapters')
     arc = models.ForeignKey(Arc, on_delete=models.SET_NULL, blank=True, null=True, related_name='chapters')
     characters = models.ManyToManyField('Character', blank=True)
@@ -108,18 +115,25 @@ class Species(models.Model):
 
 class Character(models.Model):
     name = models.CharField(unique=True, max_length=50)
-    picture = models.URLField(max_length=200, blank=True, null=True)
+    picture = models.ImageField(upload_to='character_images/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=50, blank=True, null=True)
     species = models.ForeignKey(Species, on_delete=models.SET_NULL, blank=True, null=True, related_name='characters')
     manga_debut = models.ForeignKey(Manga, on_delete=models.SET_NULL, blank=True, null=True)
     anime_debut = models.ForeignKey(Anime, on_delete=models.SET_NULL, blank=True, null=True)
     seiyu = models.CharField(max_length=50, blank=True, null=True)
-
+            
     def save(self, *args, **kwargs):
         self.description = self.description.replace('\r\n', '<br>')
-
         super().save(*args, **kwargs)
+        if self.picture:
+            self.resize_image()
+
+    def resize_image(self):
+        image = Image.open(self.picture.path)
+        max_size = (300, 300)
+        image.thumbnail(max_size)
+        image.save(self.picture.path)
 
     def __str__(self):
         return self.name
