@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import mimetypes
 from pathlib import Path
 from constants import MY_EMAIL_HOST_USER, MY_EMAIL_HOST_PASSWORD, SERVER_URL
 
@@ -146,6 +147,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
+
+mimetypes.add_type("image/webp", ".webp", True)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
