@@ -38,7 +38,7 @@ class Volume(models.Model):
     number = models.IntegerField(unique=True)
     title = models.CharField(max_length=50, blank=True, null=True)
     date = models.DateField(blank=True, null=True)
-    cover = models.ImageField(upload_to='volume_covers/', blank=True, null=True)
+    cover = models.ImageField(blank=True, null=True)
     plot = models.TextField(blank=True, null=True)
         
     def save(self, *args, **kwargs):
@@ -49,7 +49,7 @@ class Volume(models.Model):
 
     def resize_image(self):
         image = Image.open(self.cover.path)
-        max_size = (500, 500)
+        max_size = (600, 600)
         image.thumbnail(max_size)
         image.save(self.cover.path)
 
@@ -115,7 +115,7 @@ class Species(models.Model):
 
 class Character(models.Model):
     name = models.CharField(unique=True, max_length=50)
-    picture = models.ImageField(upload_to='character_images/', blank=True, null=True)
+    picture = models.ImageField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=50, blank=True, null=True)
     species = models.ForeignKey(Species, on_delete=models.SET_NULL, blank=True, null=True, related_name='characters')
@@ -131,9 +131,9 @@ class Character(models.Model):
 
     def resize_image(self):
         image = Image.open(self.picture.path)
-        max_size = (300, 300)
+        max_size = (400, 400)
         image.thumbnail(max_size)
-        image.save(self.picture.path)
+        image.save(self.picture.path, format='WEBP', quality=100, save_all=True, optimize=True)
 
     def __str__(self):
         return self.name

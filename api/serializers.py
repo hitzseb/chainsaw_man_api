@@ -1,6 +1,9 @@
+from pickle import OBJ
 from rest_framework import serializers
 from urllib.parse import quote
 from core.models import *
+from constants import SERVER_URL
+import re
 
 # Small serializers
 # with partial data, used for nested serializers
@@ -26,6 +29,7 @@ class ArcSerializerSm(serializers.ModelSerializer):
         return request.build_absolute_uri(f'/api/arc/{obj.number}/')
         
 class VolumeSerializerSm(serializers.ModelSerializer):
+    cover = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
     class Meta:
         model = Volume
@@ -34,6 +38,10 @@ class VolumeSerializerSm(serializers.ModelSerializer):
     def get_url(self, obj):
         request = self.context.get('request')
         return request.build_absolute_uri(f'/api/volume/{obj.number}/')
+    
+    def get_cover(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(f'/api/volume/cover/{obj.cover.name}')
         
 class MangaSerializerSm(serializers.ModelSerializer):
     url = serializers.SerializerMethodField()
@@ -78,14 +86,20 @@ class SpeciesSerializerSm(serializers.ModelSerializer):
         
 class CharacterSerializerSm(serializers.ModelSerializer):
     url = serializers.SerializerMethodField()
+    picture = serializers.SerializerMethodField()
+
     class Meta:
         model = Character
         fields = ['name', 'picture', 'url']
-        
+
     def get_url(self, obj):
         request = self.context.get('request')
         encoded_name = quote(obj.name)
         return request.build_absolute_uri(f'/api/character/{encoded_name}/')
+
+    def get_picture(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(f'/api/character/picture/{obj.picture.name}')
 
 # Full serializers
 # with complete data, used for main serializers
@@ -109,7 +123,12 @@ class VolumeSerializer(serializers.ModelSerializer):
         model = Volume
         fields = ['number', 'title', 'date', 'plot', 'cover', 'chapters']
         
+    def get_cover(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(f'/api/volume/cover/{obj.cover.name}')
+        
 class MangaSerializer(serializers.ModelSerializer):
+    cover = serializers.SerializerMethodField()
     volume = VolumeSerializerSm(many=False, read_only=True)
     arc = ArcSerializerSm(many=False, read_only=True)
     characters = CharacterSerializerSm(many=True, read_only=True)
@@ -137,9 +156,14 @@ class SpeciesSerializer(serializers.ModelSerializer):
         fields = ['name', 'description', 'characters']
         
 class CharacterSerializer(serializers.ModelSerializer):
+    picture = serializers.SerializerMethodField()
     species = SpeciesSerializerSm(many=False, read_only=True)
     manga_debut = MangaSerializerSm(many=False, read_only=True)
     anime_debut = AnimeSerializerSm(many=False, read_only=True)
     class Meta:
         model = Character
         fields = ['name', 'picture', 'description', 'status', 'species', 'manga_debut', 'anime_debut']
+        
+    def get_picture(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(f'/api/character/picture/{obj.picture.name}')
