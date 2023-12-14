@@ -1,21 +1,18 @@
-import os
-from django.http import Http404
-
 from .views_core import AdminRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Character
 from .forms import CharacterForm
-from django.views.static import serve
-from django.conf import settings
 
-
-# Character views
-
+# List character
 class CharacterListView(AdminRequiredMixin, ListView):
     model = Character
     template_name = 'list_character.html'
     context_object_name = 'character_list'
+    
+    def get_queryset(self):
+        return Character.objects.order_by('manga_debut__number')
 
+# Create character
 class CharacterCreateView(AdminRequiredMixin, CreateView):
     model = Character
     form_class = CharacterForm
@@ -27,6 +24,7 @@ class CharacterCreateView(AdminRequiredMixin, CreateView):
         context['view_title'] = 'Create Character'
         return context
 
+# Update character
 class CharacterUpdateView(AdminRequiredMixin, UpdateView):
     model = Character
     form_class = CharacterForm
@@ -39,6 +37,7 @@ class CharacterUpdateView(AdminRequiredMixin, UpdateView):
         context['view_title'] = f'{self.object}'
         return context
 
+# Delete character
 class CharacterDeleteView(AdminRequiredMixin, DeleteView):
     model = Character
     template_name = 'confirm_delete.html'

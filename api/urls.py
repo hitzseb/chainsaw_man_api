@@ -1,5 +1,12 @@
 from django.urls import path
-from .views import *
+from .views_saga import SagaListView, SagaRetrieveView
+from .views_arc import ArcListView, ArcRetrieveView
+from .views_volume import VolumeListView, VolumeRetrieveView, serve_volume_cover
+from .views_manga import MangaListView, MangaRetrieveView
+from .views_season import SeasonListView, SeasonRetrieveView
+from .views_anime import AnimeListView, AnimeRetrieveView
+from .views_species import SpeciesListView, SpeciesRetrieveView
+from .views_character import CharacterListView, CharacterRetrieveView, serve_character_picture
 
 urlpatterns = [
     path('saga/', SagaListView.as_view(), name='saga_list_drf'),
@@ -15,9 +22,9 @@ urlpatterns = [
     path('season/<int:number>/', SeasonRetrieveView.as_view(), name='season_detail_drf'),
     path('anime/', AnimeListView.as_view(), name='anime_list_drf'),
     path('anime/<str:number>/', AnimeRetrieveView.as_view(), name='anime_detail_drf'),
+    path('species/', SpeciesListView.as_view(), name='species_list_drf'),
+    path('species/<str:name>/', SpeciesRetrieveView.as_view(), name='species_detail_drf'),
     path('character/', CharacterListView.as_view(), name='character_list_drf'),
     path('character/<str:name>/', CharacterRetrieveView.as_view(), name='character_detail_drf'),
     path('character/picture/<str:image_filename>/', serve_character_picture, name='serve_character_picture'),
-    path('species/', SpeciesListView.as_view(), name='species_list_drf'),
-    path('species/<str:name>/', SpeciesRetrieveView.as_view(), name='species_detail_drf'),
 ]

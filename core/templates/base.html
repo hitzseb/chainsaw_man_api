@@ -4,6 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A comprehensive Chainsaw Man RESTful API that provides access to detailed information about characters, chapters, and more. Seamlessly integrate relevant data from the Chainsaw Man series into your own applications with ease. Unlock the power of Chainsaw Man's universe for your development needs.">
+
   <title>Chainsaw Man API</title>
   {% load static %}
   <link rel="icon" href="{% static 'img/icon.webp' %}" type="image/x-icon">
@@ -14,9 +16,8 @@
 
   <nav class="navbar navbar-expand-lg navbar-primary bg-primary py-2" aria-label="Offcanvas navbar large">
     <div class="container-fluid">
-      <a class="navbar-brand text-warning fs-3 fw-bold ps-3 align-middle" href="{% url 'home' %}">
-        <img src="{% static 'img/logo.png' %}" style="max-width:9rem;"/>
-        <span class="fs-3 align-middle">API</span>
+      <a class="navbar-brand text-warning fs-4 fw-bold ps-3 align-middle" href="{% url 'home' %}">
+        Chainsaw Man API
         </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
         aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
@@ -25,11 +26,7 @@
       <div class="offcanvas offcanvas-end text-bg-primary" tabindex="-1" id="offcanvasNavbar2"
         aria-labelledby="offcanvasNavbar2Label">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title text-warning fs-4 fw-bold" id="offcanvasNavbar2Label">
-            <img src="{% static 'img/logo.png' %}" style="max-width:9rem;"/>
-            <span class="fs-3 align-middle">API</span>
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+          <button type="button" class="btn-close ms-auto" data-bs-dismiss="offcanvas"
             aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">

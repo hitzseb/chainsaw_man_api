@@ -1,22 +1,15 @@
-import os
-from django.http import Http404
-
 from .views_core import AdminRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Volume
 from .forms import VolumeForm
-from django.views.static import serve
-from django.conf import settings
 
 # List volume
-
 class VolumeListView(AdminRequiredMixin, ListView):
     model = Volume
     template_name = 'list_volume.html'
     context_object_name = 'volume_list'
 
 # Create volume
-
 class VolumeCreateView(AdminRequiredMixin, CreateView):
     model = Volume
     form_class = VolumeForm
@@ -29,7 +22,6 @@ class VolumeCreateView(AdminRequiredMixin, CreateView):
         return context
 
 # Update volume
-
 class VolumeUpdateView(AdminRequiredMixin, UpdateView):
     model = Volume
     form_class = VolumeForm
@@ -43,7 +35,6 @@ class VolumeUpdateView(AdminRequiredMixin, UpdateView):
         return context
 
 # Delete volume
-
 class VolumeDeleteView(AdminRequiredMixin, DeleteView):
     model = Volume
     template_name = 'confirm_delete.html'
