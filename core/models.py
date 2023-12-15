@@ -60,11 +60,25 @@ class Volume(models.Model):
 
 class Manga(models.Model):
     number = models.IntegerField(unique=True)
-    title = models.CharField(max_length=50, blank=True, null=True,)
+    title = models.CharField(max_length=50, blank=True, null=True)
     date = models.DateField(blank=True, null=True,)
+    cover = models.ImageField(blank=True, null=True)
+    plot = models.TextField(blank=True, null=True)
     volume = models.ForeignKey(Volume, on_delete=models.SET_NULL, blank=True, null=True, related_name='chapters')
     arc = models.ForeignKey(Arc, on_delete=models.SET_NULL, blank=True, null=True, related_name='chapters')
     characters = models.ManyToManyField('Character', blank=True)
+    
+    def save(self, *args, **kwargs):
+        self.plot = self.plot.replace('\r\n', '<br>')
+        super().save(*args, **kwargs)
+        if self.cover:
+            self.resize_image()
+
+    def resize_image(self):
+        image = Image.open(self.cover.path)
+        max_size = (600, 600)
+        image.thumbnail(max_size)
+        image.save(self.cover.path)
 
     def __str__(self):
         return f'{self.number} | {self.title}'
@@ -73,14 +87,22 @@ class Manga(models.Model):
 
 class Season(models.Model):
     number = models.IntegerField(unique=True)
-    plot = models.TextField(blank=True, null=True)
+    poster = models.ImageField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+    plot = models.TextField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.plot = self.plot.replace('\r\n', '<br>')
-
         super().save(*args, **kwargs)
+        if self.poster:
+            self.resize_image()
+
+    def resize_image(self):
+        image = Image.open(self.poster.path)
+        max_size = (600, 600)
+        image.thumbnail(max_size)
+        image.save(self.poster.path)
 
     def __str__(self):
         return f'Season {self.number}'
@@ -90,9 +112,23 @@ class Season(models.Model):
 class Anime(models.Model):
     number = models.IntegerField(unique=True)
     title = models.CharField(max_length=50, blank=True, null=True)
+    still = models.ImageField(blank=True, null=True)
     date = models.DateField(blank=True, null=True)
+    plot = models.TextField(blank=True, null=True)
     season = models.ForeignKey(Season, on_delete=models.SET_NULL, blank=True, null=True, related_name='episodes')
     characters = models.ManyToManyField('Character', blank=True, related_name='characters')
+    
+    def save(self, *args, **kwargs):
+        self.plot = self.plot.replace('\r\n', '<br>')
+        super().save(*args, **kwargs)
+        if self.still:
+            self.resize_image()
+
+    def resize_image(self):
+        image = Image.open(self.still.path)
+        max_size = (400, 400)
+        image.thumbnail(max_size)
+        image.save(self.still.path)
 
     def __str__(self):
         return f'{self.number} | {self.title}'

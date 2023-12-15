@@ -20,9 +20,10 @@ class ArcSerializer(serializers.ModelSerializer):
         
 class VolumeSerializer(serializers.ModelSerializer):
     chapters = MangaSerializerSm(many=True, read_only=True)
+    cover = serializers.SerializerMethodField()
     class Meta:
         model = Volume
-        fields = ['number', 'title', 'date', 'plot', 'cover', 'chapters']
+        fields = ['number', 'title', 'date', 'cover', 'plot', 'chapters']
         
     def get_cover(self, obj):
         request = self.context.get('request')
@@ -35,20 +36,34 @@ class MangaSerializer(serializers.ModelSerializer):
     characters = CharacterSerializerSm(many=True, read_only=True)
     class Meta:
         model = Manga
-        fields = ['number', 'title', 'date', 'volume', 'arc', 'characters']
+        fields = ['number', 'title', 'date', 'cover', 'plot', 'volume', 'arc', 'characters']
+        
+    def get_cover(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(f'/api/volume/cover/{obj.cover.name}')
         
 class SeasonSerializer(serializers.ModelSerializer):
+    poster = serializers.SerializerMethodField()
     episodes = AnimeSerializerSm(many=True, read_only=True)
     class Meta:
         model = Season
-        fields = ['number', 'plot', 'start_date', 'end_date', 'episodes']
+        fields = ['number',  'poster','start_date', 'end_date', 'plot','episodes']
+        
+    def get_poster(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(f'/api/season/poster/{obj.poster.name}/')
         
 class AnimeSerializer(serializers.ModelSerializer):
+    still = serializers.SerializerMethodField()
     season = SeasonSerializerSm(many=False, read_only=True)
     characters = CharacterSerializerSm(many=True, read_only=True)
     class Meta:
         model = Anime
-        fields = ['number', 'title', 'date', 'season', 'characters']
+        fields = ['number', 'title', 'still', 'date', 'plot', 'season', 'characters']
+        
+    def get_still(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(f'/api/anime/still/{obj.still.name}/')
         
 class SpeciesSerializer(serializers.ModelSerializer):
     characters = CharacterSerializerSm(many=True, read_only=True)

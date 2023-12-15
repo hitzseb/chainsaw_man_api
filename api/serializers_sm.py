@@ -41,34 +41,49 @@ class VolumeSerializerSm(serializers.ModelSerializer):
         return request.build_absolute_uri(f'/api/volume/cover/{obj.cover.name}/')
         
 class MangaSerializerSm(serializers.ModelSerializer):
+    cover = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
     class Meta:
         model = Manga
-        fields = ['number', 'title', 'url']
+        fields = ['number', 'title', 'cover', 'url']
         
     def get_url(self, obj):
         request = self.context.get('request')
         return request.build_absolute_uri(f'/api/manga/{obj.number}/')
+    
+    def get_cover(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(f'/api/manga/cover/{obj.cover.name}')
 
 class SeasonSerializerSm(serializers.ModelSerializer):
+    poster = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
     class Meta:
         model = Season
-        fields = ['number', 'url']
+        fields = ['number', 'poster', 'url']
         
     def get_url(self, obj):
         request = self.context.get('request')
         return request.build_absolute_uri(f'/api/season/{obj.number}/')
+    
+    def get_poster(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(f'/api/season/poster/{obj.poster.name}/')
       
 class AnimeSerializerSm(serializers.ModelSerializer):
+    still = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
     class Meta:
         model = Anime
-        fields = ['number', 'title', 'date', 'url']
+        fields = ['number', 'title', 'still', 'date', 'url']
         
     def get_url(self, obj):
         request = self.context.get('request')
         return request.build_absolute_uri(f'/api/anime/{obj.number}/')
+    
+    def get_still(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(f'/api/anime/still/{obj.still.name}/')
         
 class SpeciesSerializerSm(serializers.ModelSerializer):
     url = serializers.SerializerMethodField()
