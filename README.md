@@ -19,10 +19,10 @@ curl https://chainsawmanapi.pythonanywhere.com/api/character/Pochita/
 {
     "name": "Pochita",
     "picture": "https://chainsawmanapi.pythonanywhere.com/api/character/picture/Pochita.webp/",
-    "description": "Pochita (ポチタ?) es el Demonio de la Motosierra (チェンソーの悪あく魔ま Chensō no Akuma?) que personifica el miedo a las motosierras. Era el Chainsaw Man original (チェンソーマン Chensō Man?) antes de convertirse en el corazón de Denji. Es el protagonista titular de la serie.",
-    "status": "Vivo",
+    "description": "Pochita (ポチタ?) is the Chainsaw Devil (チェンソーの悪あく魔ま Chensō no Akuma?) who embodies the fear of chainsaws. He was the original Chainsaw Man (チェンソーマン Chensō Man?) prior to becoming Denji's heart. He is the overarching titular protagonist of the series.",
+    "status": "Alive",
     "species": {
-        "name": "Híbrido"
+        "name": "Hybrid"
     },
     "manga_debut": {
         "number": 1,
@@ -40,10 +40,42 @@ curl https://chainsawmanapi.pythonanywhere.com/api/character/Pochita/
 }
 ```
 
-## Endpoints (Continuation)
 
-- **Species:** `/api/species/` and `/api/species/name/`
-- **Characters:** `/api/character/` and `/api/character/name/`
+## Endpoints
+
+- **Sagas:**
+  - List all sagas: `/api/saga/`
+  - Detailed information about a specific saga: `/api/saga/number/`
+
+- **Arcs:**
+  - List all arcs: `/api/arc/`
+  - Detailed information about a specific arc: `/api/arc/number/`
+
+- **Volumes:**
+  - List all manga volumes: `/api/volume/`
+  - Detailed information about a specific volume: `/api/volume/number/`
+
+- **Manga Chapters:**
+  - List all manga chapters: `/api/manga/`
+  - Detailed information about a specific manga chapter: `/api/manga/number/`
+
+- **Anime Seasons:**
+  - List all anime seasons: `/api/season/`
+  - Detailed information about a specific anime season: `/api/season/number/`
+
+- **Anime Episodes:**
+  - List all anime episodes: `/api/anime/`
+  - Detailed information about a specific anime episode: `/api/anime/number/`
+
+- **Species:**
+  - List all species: `/api/species/`
+  - Detailed information about a specific species by name: `/api/species/name/`
+
+- **Characters:**
+  - List all characters: `/api/character/`
+  - Detailed information about a specific character by name: `/api/character/name/`
+
+
 
 ## Technologies Used
 
@@ -54,6 +86,7 @@ curl https://chainsawmanapi.pythonanywhere.com/api/character/Pochita/
 - drf-yasg 1.21.7
 - Bootstrap 5.3
 - Other packages and dependencies as specified in `requirements.txt`
+
 
 
 ## About
